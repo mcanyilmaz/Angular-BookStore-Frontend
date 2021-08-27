@@ -1,0 +1,66 @@
+
+<div class="container">
+<div class="row">
+    <div class="col-sm-2"> <app-adminindex></app-adminindex></div>
+    
+      <div class="col-sm-6"> 
+    
+    <form #addForm="ngForm" (ngSubmit)="onAddBook(addForm)">
+  
+  
+       <div class="col-3">
+        <label>Book Name</label>
+        <input type="text" ngModel name="bookName" class="form-control" id="bookName">
+       </div>
+  
+      <div class="col-3">
+        <label>price</label>
+        <input type="text" ngModel name="bookPrice" class="form-control" id="bookPrice" aria-describedby="emailHelp">
+  
+      </div>
+  
+      <div class="col-3">
+        <label>stock</label>
+        <input type="text" ngModel name="bookStock" class="form-control" id="bookStock" aria-describedby="emailHelp">
+  
+      </div>
+  
+      
+  
+      <div class="col-3">
+        
+  
+        <label>Author Id</label>
+       
+        <select class="form-select" required>
+  
+          <option id="author_id"  class="form-control" ngModel name="author_id" *ngFor="let author of authors" value="{{author.id}}" >{{author.id}}</option>
+  
+        </select>
+        <input type="text" ngModel name="author_id" class="form-control" id="author_id" aria-describedby="emailHelp">
+  
+      
+        <!--<input type="text" ngModel name="authorId" class="form-control" id="authorId" aria-describedby="emailHelp">
+        --->
+      </div>
+  
+      <div class="col-3">
+        <label>Category Id</label>
+        <select class="form-select" aria-label="Default select example">
+          <option selected>Please Select Category</option>
+  
+          <option value="categoryName" *ngFor="let category of categories"  >{{category.id}} {{category.categoryName}}</option>
+     
+         
+        
+        </select>
+        <input type="text" ngModel name="category_id" class="form-control" id="categoryId" aria-describedby="emailHelp">
+  
+      </div>
+  
+  
+      <button [disabled]="addForm.invalid"  id="butonid" type="submit" class="btn btn-primary">Submit</button>
+    </form>
+  
+    </div>
+  </div>

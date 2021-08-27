@@ -1,0 +1,25 @@
+<div class="container">
+  <div class="row">
+      <div class="col-sm-2"> <app-adminindex></app-adminindex></div>
+      <div class="col-sm-6"> 
+  
+  
+  <form #addForm="ngForm" (ngSubmit)="updateAuthor()">
+  
+    <div class="col-6">
+      <label>Author Name</label>
+      <input type="text"  [(ngModel)]="author.authorName" name="authorName" class="form-control" id="authorName">
+    </div>
+  
+    <div class="col-6">
+  
+        <label>Author About</label>
+          <textarea class="form-control" [(ngModel)]="author.authorAbout" name="authorAbout"  id="authorAbout" rows="6" aria-label="With textarea"></textarea>
+   
+    </div>
+
+    <button [disabled]="addForm.invalid"  id="butonid" type="submit" class="btn btn-primary">Submit</button>
+  
+  </form>
+  </div>
+  </div>

@@ -1,0 +1,40 @@
+<div class="container">
+  <div class="row">
+      <div class="col-sm-2"> <app-adminindex></app-adminindex></div>
+      <div class="col-sm-6"> 
+
+        
+<table class="table">
+    <thead>
+    <tr>
+  
+      <th scope="col">Category id</th>
+      <th scope="col">Category Name</th>
+      <th scope="col">Function</th>
+    
+    </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let categories of category">
+            <td>{{categories.id}}</td>
+            <td>{{categories.categoryName}}</td>
+ 
+        <td>
+            <button (click)="categoryDetails(categories.id)" type="button" class="btn btn-primary">Details</button>
+            <button (click)="updateCategory(categories.id)" type="button" class="btn btn-info">Edit</button>&nbsp;
+            <button (click)="deleteCategory1(categories.id)"  type="button"  class="btn btn-danger">Delete</button>
+          </td>
+      
+    </tr>
+  
+   
+  
+
+
+    </tbody>
+  </table>
+
+      </div>
+
+      </div>
+      

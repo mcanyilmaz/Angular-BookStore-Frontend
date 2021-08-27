@@ -1,0 +1,37 @@
+<div class="container">
+  <div class="row">
+      <div class="col-sm-2"> <app-adminindex></app-adminindex></div>
+      <div class="col-sm-6"> 
+    
+
+<table class="table">
+    <thead>
+    <tr>
+  
+      <th scope="col">Auhor id</th>
+      <th scope="col">Author Name</th>
+      <th scope="col">Function</th>
+    
+    </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor=" let authors of author">
+    
+            <td>{{authors.id}}</td>
+          <td>{{authors.authorName}}</td>
+         
+        <td>
+            <button (click)="authorDetails(authors.id)" type="button" class="btn btn-primary">Details</button>
+            <button (click)="updateAuthor(authors.id)" type="button" class="btn btn-info">Edit</button>&nbsp;
+            <button (click)="deleteAuthor(authors.id)"  type="button"  class="btn btn-danger">Delete</button></td>
+      
+    </tr>
+  
+   
+  
+
+
+    </tbody>
+  </table>
+  </div>
+  </div>

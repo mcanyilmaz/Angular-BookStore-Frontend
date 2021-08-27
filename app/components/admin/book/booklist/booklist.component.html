@@ -1,0 +1,113 @@
+<div class="container">
+
+
+  
+<div class="row">
+  <div class="col-sm-2"> <app-adminindex></app-adminindex></div>
+  
+    <div class="col-sm-8"> 
+  
+      <form #searchForm="ngForm" (ngSubmit)="onSearch(searchForm)">
+        
+          <input type="text" ngModel name="bookName" placeholder="Enter Book Name And Author Name" class="form-control" id="bookName">
+       
+          
+          <button class="btn btn-outline-success my-2 my-sm-0"  [disabled]="searchForm.invalid" type="submit">Search</button>
+        </form>
+      <table class="table">
+        <thead>
+        <tr>
+      
+          <th scope="col">Name</th>
+          <th scope="col">Author</th>
+          <th scope="col">Price</th>
+          <th scope="col">Stock</th>
+          <th scope="col">Function</th>
+      
+        </tr>
+        </thead>
+        <tbody>
+        <tr *ngFor="let book of books">
+        
+      
+          <td>{{book.bookName}}</td>
+          <td>{{book.author.authorName}}</td>
+          <td>{{book.bookPrice}}</td>
+          <td>{{book.bookStock}}</td>
+        
+      
+          <td>
+            <button (click)="bookDetails(book.id)" type="button" class="btn btn-primary">Details</button>
+            <button (click)="updateBook(book.id)" type="button" class="btn btn-info">Edit</button>&nbsp;
+            <button (click)="deleteBook1(book.id)" type="button" name="deleteBookButton"  class="btn btn-danger">Delete</button></td>
+      
+      
+        </tr>
+      
+        </tbody>
+      </table>
+
+
+        <div class="container row">
+          <div class="col-md-12">
+              <h1>Upload Image</h1>
+          </div>
+      </div>
+      <div class="container row">
+          <div class="col-md-6">
+              <input type="file" (change)="onFileChanged($event)">
+          </div>
+          <div class="col-md-6">
+              <input type="button" (click)="onUpload()" value="upload">
+          </div>
+      </div>
+      <hr />
+      <div class="container row">
+          <div class="col-md-12">
+              <div *ngIf=message>{{message}}</div>
+          </div>
+      </div>
+      <div class="container row">
+          <div class="col-md-6">
+              <input type="text" class="form-control" id="name" placeholder="image name" [(ngModel)]="imageName"
+                  name="name" />
+          </div>
+          <div class="col-md-6">
+              <input type="button" (click)="getImage()" value="Get Image">
+          </div>
+      </div>
+      <div class="container row">
+          <div class="col-md-12">
+              <div *ngIf=retrievedImage>
+                  <img [src]="retrievedImage">
+              </div>
+          </div>
+      </div>  
+       
+    
+      </div>
+
+  
+
+  
+
+
+    
+    
+    <!-- <div class="container">
+      <div class="row">
+        <div id="custom-search-input">
+          <div class="input-group col-md-12" style="text-align: center">
+            <input type="text" class="search-query form-control" placeholder="Search With BookName & Author" ngModel name="bookName"  name="bookName"/>
+            <span class="input-group-btn">
+              <button  (click)="findBookName(bookName)" class="btn btn-danger" type="button" >Ara
+                <span class=" glyphicon glyphicon-search"></span>
+              </button>
+            </span>
+          </div>
+        </div>
+      </div>
+    
+    
+    </div> -->
+    
