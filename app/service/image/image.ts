@@ -12,5 +12,18 @@ export interface Image {
 
  name:String;
 
+ imageByte:any;
+
+
+ state:boolean;
+
+ //@ts-ignore
+ picByte:any;
+
+ type:string;
+ fileName:string
+ fileType:string;
+
+
 
 }

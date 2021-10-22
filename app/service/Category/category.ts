@@ -4,4 +4,11 @@ export interface Category{
     //@ts-ignore
     categoryName:string;
    
+     //@ts-ignore
+ picByte:any;
+
+ type:string;
+ fileName:string
+ fileType:string;
+ 
 }

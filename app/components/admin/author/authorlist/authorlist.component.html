@@ -1,17 +1,20 @@
 <div class="container">
   <div class="row">
       <div class="col-sm-2"> <app-adminindex></app-adminindex></div>
-      <div class="col-sm-6"> 
+      <div class="col-sm-8"> 
     
 
 <table class="table">
     <thead>
     <tr>
   
-      <th scope="col">Auhor id</th>
-      <th scope="col">Author Name</th>
-      <th scope="col">Function</th>
-    
+      <th scope="col">Yazar id</th>
+      <th scope="col">Yazar Name</th>
+      <th scope="col">İşlemler</th>
+
+      <th>
+        <button (click)="createAuthor()"  data-bs-toggle="modal" data-bs-target="#createAuthor"   type="button"  class="btn btn-danger">Yazar Ekle</button>
+      </th>
     </tr>
     </thead>
     <tbody>
@@ -21,10 +24,13 @@
           <td>{{authors.authorName}}</td>
          
         <td>
-            <button (click)="authorDetails(authors.id)" type="button" class="btn btn-primary">Details</button>
-            <button (click)="updateAuthor(authors.id)" type="button" class="btn btn-info">Edit</button>&nbsp;
-            <button (click)="deleteAuthor(authors.id)"  type="button"  class="btn btn-danger">Delete</button></td>
+            <button (click)="editAuthor(authors)" data-bs-toggle="modal" data-bs-target="#authorDetails" type="button" class="btn btn-primary">Detaylar</button>
+            <button (click)="editAuthor(authors)" type="button" data-bs-toggle="modal" data-bs-target="#updateAuthor"  class="btn btn-info">Güncelle</button>&nbsp;
+            <button (click)="deleteModal(authors.id)" data-bs-toggle="modal" data-bs-target="#deleteAuthor"   type="button"  class="btn btn-danger">Sil</button></td>
       
+
+
+            
     </tr>
   
    
@@ -34,4 +40,197 @@
     </tbody>
   </table>
   </div>
+
+
+  
+<!-- Create Author -->
+
+
+
+<div class="modal fade" id="createAuthor" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="staticBackdropLabel">Create Author</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body" *ngIf="myForm">
+        <form [formGroup]="myForm">
+          <div class="form-group">
+            <label for="authorName">Yazar Adı</label>
+            <input type="email" id="authorName"  aria-describedby="authorName" placeholder="Enter authorName"
+                   formControlName="authorName">
+          
+          </div>
+          <div class="form-group">
+            <label for="authorAbout">Yazar Hakkında</label>
+            <input type="email" id="authorAbout"  aria-describedby="authorAbout" placeholder="Enter authorAbout"
+                   formControlName="authorAbout">
+          
+          </div>
+     
+
+          <div class="form-group">
+            <label for="imageName">Yazar Resim Adı</label>
+            <input type="email" id="imageName" readonly class="form-control"  aria-describedby="imageName" placeholder="Enter imageName"
+                   formControlName="imageName" >
+          
+          </div>
+
+          <input type="file" (change)="onFileChanged($event)">
+          <input type="button" (click)="onUpload()" value="upload">    
+            <div *ngIf=message>{{message}}</div>
+           
+      </form>
+      
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Kapat</button>
+        <button type="button" class="btn btn-primary" data-bs-dismiss="modal" (click)="createAuthor2()">Yazar Ekle</button>
+      </div>
+    </div>
   </div>
+</div>
+
+    
+<!-- Create Author BİTİŞ -->
+
+
+
+
+
+        
+<!-- Details Modal  Başlangıç -->
+<div class="modal fade" id="authorDetails" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="authorDetails">Yazar Detayları </h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+
+   
+
+      <div class="modal-body" *ngIf="form">
+        <form [formGroup]="form">
+
+          <div class="d-flex justify-content-center">
+           
+
+
+        </div>
+  
+          <div class="form-group">
+            <label for="authorName">Yazar Adı </label>
+            <input type="email" readonly class="form-control" id="authorName" aria-describedby="authorName" placeholder="Enter authorName"
+                   formControlName="authorName">
+           
+          </div>
+
+          <div class="form-group">
+            <label for="authorAbout">Yazar Hakkında </label>
+            <input type="email" readonly class="form-control" id="authorAbout" aria-describedby="authorAbout" placeholder="Enter authorAbout"
+                   formControlName="authorAbout">  
+          
+          </div>
+
+    
+
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Kapat</button>
+      
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Details MODAL BİTİŞ -->
+
+
+<!-- Update Author  Başlangıç -->
+<div class="modal fade" id="updateAuthor" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="staticBackdropLabel">Yazar Güncelle</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+
+  
+     
+      <div *ngIf=retrievedImage>
+        <img [src]="retrievedImage"  height="100px" width="100px">
+    </div>
+
+
+      <div class="modal-body" *ngIf="form">
+        <form [formGroup]="form">
+         
+          <div class="form-group">
+            <label for="authorName">Yazar Adı</label>
+            <input type="email" class="form-control {{form.controls.authorName.touched && form.controls.authorName.errors ? 'is-invalid':'' }}" id="authorName" aria-describedby="authorName" placeholder="Enter authorName"
+                   formControlName="authorName">
+            <small id="titleRequired" class="text-danger" *ngIf="form.controls.authorName.touched && form.controls.authorName.errors && form.controls.authorName.errors.required" >
+             Bu alan boş bırakılamaz
+            </small>
+          </div>
+
+
+          
+          <div class="form-group">
+            <label for="authorAbout">Yazar Hakkında</label>
+            <input type="email" class="form-control {{form.controls.authorAbout.touched && form.controls.authorAbout.errors ? 'is-invalid':'' }}" id="authorAbout" aria-describedby="authorAbout" placeholder="Enter authorAbout"
+                   formControlName="authorAbout">  
+            <small id="titleRequired" class="text-danger" *ngIf="form.controls.authorAbout.touched && form.controls.authorAbout.errors && form.controls.authorAbout.errors.required" >
+              Bu alan boş bırakılamaz
+            </small>
+          </div>
+
+      
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Kapat</button>
+        <button type="button" (click)="updateAuthor()" data-bs-dismiss="modal" class="btn btn-primary">Yazar Güncelle
+      
+      </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Update MODAL BİTİŞ -->
+
+
+
+<!-- Delete Modal Başlangıç -->
+<div class="modal fade" id="deleteAuthor" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="deleteBookModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="deleteAuthor">Yazar Sil</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+          <label for="areYouSureDelete">Silmek İstediğinize Emin Misiniz ?</label>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hayır</button>
+        <button type="button" class="btn btn-primary" data-bs-dismiss="modal"  (click)="deleteBook1()" >Evet
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- Delete Modal Bitiş -->
+
+
+
+
+
+
+  </div>
+
+

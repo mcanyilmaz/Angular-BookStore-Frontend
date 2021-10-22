@@ -1,0 +1,104 @@
+<div class="container">
+
+  <h4>Siparişlerim</h4>
+  
+  
+  <table class="table">
+      <thead class="thead-dark">
+        <tr>
+        
+          <th scope="col">Sipariş Adı</th>
+          <th scope="col">Sipariş Tarihi</th>
+          <th scope="col">Takip No</th>
+  
+          <th scope="col">İşlem</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let myOrder of orders" >
+          <a routerLink="" (click)="goToOrderBookDetail(myOrder.id)"><td>{{myOrder.bookName}}</td></a>
+          <td>{{myOrder.createTime}}</td>
+          <td>{{myOrder.orderNumber}}</td>
+          <td>
+            <button type="button" class="btn btn-outline-primary" (click)="viewOrderDetail(myOrder)"  data-bs-toggle="modal" data-bs-target="#viewOrderDetail" data-target=".bd-example-modal-xl">Kargom Nerede</button>
+            </td>
+          
+        </tr>
+      
+      </tbody>
+    </table>
+    
+   
+  
+  
+  
+  
+  </div>
+
+
+
+  <div class="modal fade bd-example-modal-xl"  id="viewOrderDetail" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="staticBackdropLabel">Sipariş Detayı</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+
+                    <div class="card">
+                      <div class="title">Sipariş Takip</div>
+                      <div class="info">
+                          <div class="row">
+                              <div class="col-7"> <span id="heading">Sipariş Tarihi</span><br> <span id="details">{{selectedOrder.createTime}}</span> </div>
+                              <div class="col-5 pull-right"> <span id="heading">Sipariş No.</span><br> <span id="details">{{selectedOrder.orderNumber}}</span> </div>
+                          </div>
+                      </div>
+                      <div class="pricing">
+                          <div class="row">
+                              <div class="col-9"> <span id="name">Ürün Adı : {{selectedOrder.bookName}}</span> </div>
+                              <div class="col-3"> <span id="price">Fiyat : {{selectedOrder.bookPrice}} TL</span> </div>
+                              <div class="col-9"> <span id="name">Ürün Adet : </span> </div>
+                              <div class="col-3"> <span id="name">{{selectedOrder.bookPiece}} Adet</span> </div>
+
+                          </div>
+                          <div class="row">
+                              <div class="col-9"> <span id="name">Kargo Bedeli</span> </div>
+                              <div class="col-3"> <span id="price">5 TL</span> </div>
+                          </div>
+                      </div>
+                      <div class="total">
+                          <div class="row">
+                              <div class="col-9">Toplam</div>
+                              <div class="col-3">{{selectedOrder.totalPrice}} TL</div>
+                          </div>
+                      </div>
+                      <div class="tracking">
+                          <div class="title">Sipariş Durumu</div>
+                      </div>
+                      <div class="progress-track">
+                          <ul id="progressbar">
+                              <li class="step0 active " id="step1">Sipariş Verildi</li>
+                              <li class="step0 active text-center" id="step2">Hazırlanıyor</li>
+                              <li class="step0 active text-right" id="step3">Yolda</li>
+                              <li class="step0 text-right" id="step4">Teslim Edildi</li>
+                          </ul>
+                      </div>
+                      <div class="footer">
+                          <div class="row">
+                              <div class="col-2"><img class="img-fluid" src="assets/img/resim1.jpg"></div>
+                              <div class="col-10">Want any help? Please &nbsp;<a> contact us</a></div>
+                          </div>
+                      </div>
+                  </div>
+
+
+
+
+
+      </div>
+    </div>
+  </div>
+
+
+
+

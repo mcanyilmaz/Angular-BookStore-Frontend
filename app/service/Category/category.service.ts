@@ -11,36 +11,38 @@ export class CategoryService {
  
 
 
-  private apiServerUrl='http://localhost:8080';
+  private apiServerUrl='http://localhost:8080/v1/';
   constructor(private http: HttpClient) {
   }
 
   public getCategory(): Observable<Category[]>{
-    return this.http.get<Category[]>('http://localhost:8080/v1/getAllCategory');
+    return this.http.get<Category[]>(this.apiServerUrl+'getAllCategory');
 
   }
 
   public getByCategoryId(id:number):Observable<Category>{
-    return this.http.get<Category>('http://localhost:8080/v1/findByCategoryId/'+id);
+    return this.http.get<Category>(this.apiServerUrl+'findByCategoryId/'+id);
 
   }
 
   public deleteCategory(id:number):Observable<void>{
-    return this.http.delete<void>('http://localhost:8080/v1/deleteCategory/'+id);
+    return this.http.delete<void>(this.apiServerUrl+'deleteCategory/'+id);
   }
 
-  public addCategory(category:Category):Observable<Category>{
-    return this.http.post<Category>('http://localhost:8080/v1/addCategory/',category);
+  public addCategory(body:any):Observable<any>{
+    return this.http.post<any>(this.apiServerUrl+'addCategory/',body);
   }
 
 
   public deleteCategories(id:number):Observable<void>{
-    return this.http.delete<void>('http://localhost:8080/v1/deleteCategory/'+id);
+    return this.http.delete<void>(this.apiServerUrl+'deleteCategory/'+id);
  }
 
 
- public updateCategory(id:number,category:Category):Observable<Object>{
-  return this.http.put('http://localhost:8080/v1/updateCategory/'+id,category);
+
+
+public updateCategory(id:number,body:any):Observable<Object>{
+  return this.http.put(this.apiServerUrl+'updateCategory/'+id,body);
 }
 
 

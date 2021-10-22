@@ -2,116 +2,70 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { AppComponent } from './app.component';
 import { AdminindexComponent } from './components/admin/adminindex/adminindex.component';
-import { AddauthorComponent } from './components/admin/author/addauthor/addauthor.component';
-import { AuthordetailsComponent } from './components/admin/author/authordetails/authordetails.component';
+
 import { AuthorlistComponent } from './components/admin/author/authorlist/authorlist.component';
-import { UpdateauthorComponent } from './components/admin/author/updateauthor/updateauthor.component';
-import { AddbookComponent } from './components/admin/book/addbook/addbook.component';
-import { BookdetailsComponent } from './components/admin/book/bookdetails/bookdetails.component';
+
 import { BooklistComponent } from './components/admin/book/booklist/booklist.component';
-import { UpdatebookComponent } from './components/admin/book/updatebook/updatebook.component';
-import { AddcategoryComponent } from './components/admin/category/addcategory/addcategory.component';
-import { CategorydetailsComponent } from './components/admin/category/categorydetails/categorydetails.component';
+
 import { CategorylistComponent } from './components/admin/category/categorylist/categorylist.component';
-import { UpdatecategoryComponent } from './components/admin/category/updatecategory/updatecategory.component';
+import { OrdersListComponent } from './components/admin/orders-list/orders-list.component';
+import { SliderComponent } from './components/admin/slider/slider/slider.component';
+
 import { CategorybooklistComponent } from './components/categorybooklist/categorybooklist.component';
 import { CategorybooklistdetailsComponent } from './components/categorybooklistdetails/categorybooklistdetails.component';
+import { HomeComponent } from './components/home/home/home.component';
 
 
 
 import { IndexComponent } from './components/index/index.component';
+import { AboutComponent } from './components/pages/about/about.component';
+import { AuthorDetailsComponent } from './components/pages/author-details/author-details.component';
+import { BuyProductComponent } from './components/pages/buy-product/buy-product.component';
+import { CategoryComponent } from './components/pages/category/category.component';
+import { ContactComponent } from './components/pages/contact/contact.component';
+import { NotFoundComponent } from './components/pages/notFound/not-found/not-found.component';
+import { UserDetailsComponent } from './components/user/user-details/user-details.component';
+import { UserBookCommentsComponent } from './components/user/userBookComments/user-book-comments/user-book-comments.component';
+import { UserOrdersComponent } from './components/user/userOrders/user-orders/user-orders.component';
+import { AdminGuard } from './guard/AdminGuard';
+import { LoginGuard } from './guard/LoginGuard';
 
 
 const routes: Routes = [
 
-  {
-    path:'test',
-    component:AppComponent
-  },
+  //ALL NO Access Paths
+  {path:'test',component:AppComponent},
+  {path:'',component:IndexComponent},
+  {path:'categoryBookList/:id',component:CategorybooklistComponent},
+  {path:'categoryBookListDetails/:id',component:CategorybooklistdetailsComponent},
+  {path:'buyProduct/:id',component:BuyProductComponent},
+  {path: 'home', component: HomeComponent },
+  {path:'authordetails/:id',component:AuthorDetailsComponent},
+  {path:'about',component:AboutComponent},
+  {path:'contact',component:ContactComponent},
+  {path:'category',component:CategoryComponent},
 
-  {
-    path:'bookList',
-    component:BooklistComponent
-  },
-  {
-    path:'addBook',
-    component:AddbookComponent
-  },
-  {
-    path:'',
-    component:IndexComponent
-  },
-  {
-    path:'updateBook/:id',
-    component:UpdatebookComponent
-  },
-  {
-    path:'book-details/:id',
-    component:BookdetailsComponent
-  }
-
-  ,
-  {
-    path:'categoryDetails/:id',
-    component:CategorydetailsComponent
-  }
-
-  ,
-  {
-    path:'authorList',
-    component:AuthorlistComponent
-  },
   
+ 
+  // Admin Panel Paths
+  {path:'bookList',component:BooklistComponent,canActivate:[AdminGuard]},
+  {path:'categoryList',component:CategorylistComponent,canActivate:[AdminGuard]},
+  {path:'authorList',component:AuthorlistComponent,canActivate:[AdminGuard]},
+  {path:'adminPanel',component:AdminindexComponent,canActivate:[AdminGuard]},
+  {path:'ordersList',component:OrdersListComponent,canActivate:[AdminGuard]},
+  {path:'slider',component:SliderComponent,canActivate:[AdminGuard]},
 
-  {
-    path:'authordetails/:id',
-    component:AuthordetailsComponent
     
-  },
-  {
-    path:'updateAuthor/:id',
-    component:UpdateauthorComponent
-    
-  },{
-    path:'addAuthor',
-    component:AddauthorComponent
+//  { path: '**', pathMatch: 'full', component: NotFoundComponent },
+  //{path: '**', pathMatch: 'full', component: NotFoundComponent},
+ // {path: '**', redirectTo: '/404'},
 
-  
-  }
-  ,{
-    path:'categoryList',
-    component:CategorylistComponent
+  //Only User Access Paths
+  {path: 'userDetails', component: UserDetailsComponent, canActivate:[LoginGuard]},
+  {path: 'userOrders', component: UserOrdersComponent, canActivate:[LoginGuard]},
+  {path: 'userBookComments', component: UserBookCommentsComponent, canActivate:[LoginGuard]},
 
-  
-  }
-  ,{
-    path:'addCategory',
-    component:AddcategoryComponent
-
-  
-  }
-  ,{
-    path:'adminPanel',
-    component:AdminindexComponent
-  
-  }
-  ,{
-    path:'categoryBookList/:id',
-    component:CategorybooklistComponent
-  
-  }
-  ,{
-    path:'categoryBookListDetails/:id',
-    component:CategorybooklistdetailsComponent
-  
-  },
-  {
-    path:'updateCategory/:id',
-    component:UpdatecategoryComponent
-    
-  }
-    
-
+ 
 
  
 

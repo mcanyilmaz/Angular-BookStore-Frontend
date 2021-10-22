@@ -1,0 +1,111 @@
+
+
+
+
+
+
+<div class="container">
+    <h4>Sepetinizde ki ürünler
+    </h4> 
+    
+    
+  <div class="row">
+      <div class="col-sm-12 col-md-10 col-md-offset-1">
+
+   
+          <table class="table table-hover">
+              <thead>
+                  <tr>
+                      <th>Ürün</th>
+                      <th>Adet</th>
+             
+                      <th class="text-center">Ürün Fiyatı</th>
+                      <th class="text-center">Ara Toplam</th>
+
+                      <th> </th>
+                  </tr>
+              </thead>
+              <tbody>
+                  <tr>
+                      <td class="col-sm-8 col-md-6">
+                      <div class="media">
+                          <a class="thumbnail pull-left" href="#">  
+                              <div *ngIf=retrievedImage>
+                                  <img [src]="retrievedImage" height="150px" width="150px">
+                              </div>
+                          </a>
+                          <div class="media-body">
+                            
+                              <h4 class="media-heading"><a href="#"> {{book.bookName}}</a></h4>
+                              <h5 class="media-heading"> Yazar :  <a href="#">{{book.author.authorName}}</a></h5>
+                              <span>Stok Durumu: </span><span class="text-success"><strong>Stokta {{book.bookStock}} Adet</strong></span>
+                          </div>
+                      </div></td>
+                     
+                      <div class="center">
+                      <button type="button"  class="btn btn-outline-primary"  (click)="minus(book.bookPrice)"><i class="fa fa-minus"></i></button>
+                      <input type="text"  readonly size="2" [value]="quantity">
+                      <button type="button"  class="btn btn-outline-success" (click)="plus(book.bookPrice)"><i class="fa fa-plus"></i></button>
+                    </div>
+
+                      <td class="col-sm-1 col-md-1 text-center"><strong>{{book.bookPrice}} ₺</strong></td>
+                      <td class="col-sm-1 col-md-1 text-center"><strong>{{sumProductPrice}}₺</strong></td>
+                      <td class="col-sm-1 col-md-1">
+                      <button type="button" class="btn btn-danger">
+                          <span class="glyphicon glyphicon-remove"></span> Sepetten Çıkar
+                      </button></td>
+                  </tr>
+                 
+                  <tr>
+                      <td>   </td>
+                      <td>   </td>
+                      <td>   </td>
+                      <td><h5>Ara Toplam</h5></td>
+                      <td class="text-right"><h5><strong>{{sumProductPrice}}₺</strong></h5></td>
+                  </tr>
+                  <tr>
+                    
+                    
+                      <td>   </td>
+                      <td>   </td>
+                      <td>   </td>
+                      <td><h5>Kargo Bedeli</h5></td>
+                      <td class="text-right"><h5><strong>{{shippingPrice}}₺</strong></h5></td>
+                  </tr>
+                  <tr>
+                    
+                    
+                    <td>   </td>
+                    <td>   </td>
+                    <td>   </td>
+                    <td><h5>Teslimat adresi</h5></td>
+                    <td class="text-right"><h5><strong>{{user.userAddress}}</strong></h5></td>
+                </tr>
+
+                  <tr>
+                      <td>   </td>
+                      <td>   </td>
+                      <td>   </td>
+                      <td><h3>Toplam</h3></td>
+                      <td class="text-right"><h3><strong>{{totalPrice}} ₺</strong></h3></td>
+                  </tr>
+                  <tr>
+                      <td>   </td>
+                      <td>   </td>
+                      <td>   </td>
+                      <td>
+                      <button type="button" class="btn btn-primary">
+                          <span class="glyphicon glyphicon-shopping-cart"></span> Alışverişe Devam
+                      </button></td>
+                      <td>
+                      <button type="button" class="btn btn-success" (click)="complateTheOrder(book.bookName,book.bookPrice,book.bookStock)">
+                          Siparişi Tamamla <span class="glyphicon glyphicon-play"></span>
+                      </button></td>
+                  </tr>
+              </tbody>
+          </table>
+      </div>
+  </div>
+</div>
+
+

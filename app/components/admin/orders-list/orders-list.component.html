@@ -1,0 +1,137 @@
+<div class="container">
+    <div class="row">
+        <div class="col-sm-2"> <app-adminindex></app-adminindex></div>
+        <div class="col-sm-8"> 
+  
+          
+
+            <table class="table">
+                <thead>
+                <tr>
+              
+                  <th scope="col">Sipariş id</th>
+                  <th scope="col">Sipariş Adı</th>
+                  <th scope="col">İşlemler</th>
+            
+                
+    
+                </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let order of orders">
+                        <td>{{order.id}}</td>
+                        <td>{{order.bookName}}</td>
+             
+                        <td>
+                            <button   (click)="orderDetails(order)"  data-bs-toggle="modal" data-bs-target="#orderDetails" type="button" class="btn btn-primary">Details</button>
+                            <button (click)="deleteOrderGetById(order.id)" data-bs-toggle="modal" data-bs-target="#deleteOrder"  type="button"  class="btn btn-danger">Delete</button>
+                          </td>
+                  
+                </tr>
+              
+               
+              
+            
+            
+                </tbody>
+              </table>
+
+
+  
+  
+        </div>
+  
+        </div>
+  
+  
+    </div>
+          
+
+      
+<!-- Details Modal  Başlangıç -->
+<div class="modal fade" id="orderDetails" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="authorDetails">Order Details</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+  
+     
+  
+        <div class="modal-body" *ngIf="form">
+          <form [formGroup]="form">
+          
+     
+            <div class="form-group">
+              <label for="bookName">bookName </label>
+              <input type="email" readonly class="form-control" id="bookName" aria-describedby="bookName" placeholder="Enter bookName"
+                     formControlName="bookName">
+             
+            </div>
+
+
+            <div class="form-group">
+                <label for="bookPrice">Book Price </label>
+                <input type="email" readonly class="form-control" id="bookPrice" aria-describedby="bookPrice" placeholder="Enter bookPrice"
+                       formControlName="bookPrice">
+               
+              </div>
+
+
+              <div class="form-group">
+                <label for="username">username  </label>
+                <input type="email" readonly class="form-control" id="username" aria-describedby="username" placeholder="Enter username"
+                       formControlName="username">
+               
+              </div>
+
+
+              
+              <div class="form-group">
+                <label for="address">address  </label>
+             
+              <textarea readonly class="form-control" id="address" formControlName="address" id="exampleFormControlTextarea1" rows="3"></textarea>
+
+              </div>
+
+  
+  
+      
+  
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <!-- Details MODAL BİTİŞ -->
+
+
+  
+<!-- Delete Modal Başlangıç -->
+<div class="modal fade" id="deleteOrder" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="deleteBookModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="deleteOrder">Order Delete</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+            <label for="areYouSureDelete">Silmek İstediğinize Emin Misiniz ?</label>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-primary" data-bs-dismiss="modal" (click)="deleteOrder()"  >Yes
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- Delete Modal Bitiş -->
+
+

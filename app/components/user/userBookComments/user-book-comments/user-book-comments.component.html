@@ -1,0 +1,65 @@
+<div class="container">
+
+    <h4>Kitap yorumlarım</h4>
+    
+    
+    <table class="table">
+        <thead class="thead-dark">
+          <tr>
+          
+            <th scope="col">Kitap Adı</th>
+            <th scope="col">Oluşturma Tarihi</th>
+            <th scope="col">Yorumun</th>
+    
+            <th scope="col">Yorumu Sil</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let comment of myComments">
+            <td><a routerLink="" (click)="goToBook(comment.book.id)">{{comment.book.bookName}}</a></td>
+            <td>{{comment.createTime}}</td>
+            <td>{{comment.comment}}</td>
+            <td>
+            
+              <button class="btn-close" (click)="getUserIdForDelete(comment.id)"  data-bs-toggle="modal" data-bs-target="#deleteBookComment"
+               name="deleteBookButton"></button>
+
+            
+            </td>
+            
+          </tr>
+        
+        </tbody>
+      </table>
+      
+     
+    
+    
+    
+    
+    </div>
+
+    
+<!-- Delete Modal Başlangıç -->
+<div class="modal fade" id="deleteBookComment" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="deleteBookModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="deleteBookModal">Yorumu Sil</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+          <label for="bookDetails">Silmek İstediğinize Emin Misiniz ?</label>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hayır</button>
+        <button type="button" class="btn btn-primary" data-bs-dismiss="modal" (click)="deleteBook1()">Evet
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- Delete Modal Bitiş -->
+
+
+

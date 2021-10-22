@@ -1,16 +1,19 @@
 <div class="container">
   <div class="row">
       <div class="col-sm-2"> <app-adminindex></app-adminindex></div>
-      <div class="col-sm-6"> 
+      <div class="col-sm-8"> 
 
         
 <table class="table">
     <thead>
     <tr>
   
-      <th scope="col">Category id</th>
-      <th scope="col">Category Name</th>
-      <th scope="col">Function</th>
+      <th scope="col">Kategori id</th>
+      <th scope="col">Kategori Adı</th>
+      <th scope="col">Fonksiyon</th>
+
+     <th> <button  data-bs-toggle="modal" (click)="createCategory()" data-bs-target="#createCategory"   type="button"  class="btn btn-danger">Kategori Ekle</button>
+    </th>
     
     </tr>
     </thead>
@@ -20,9 +23,9 @@
             <td>{{categories.categoryName}}</td>
  
         <td>
-            <button (click)="categoryDetails(categories.id)" type="button" class="btn btn-primary">Details</button>
-            <button (click)="updateCategory(categories.id)" type="button" class="btn btn-info">Edit</button>&nbsp;
-            <button (click)="deleteCategory1(categories.id)"  type="button"  class="btn btn-danger">Delete</button>
+            <button (click)="editCategory(categories)" data-bs-toggle="modal" data-bs-target="#categoryDetails" type="button" class="btn btn-primary">Detaylar</button>&nbsp;
+            <button (click)="editCategory(categories)" data-bs-toggle="modal" data-bs-target="#updateCategory" type="button" class="btn btn-info">Düzenle</button>&nbsp;
+            <button (click)="setModalIdDeleteCategory(categories.id)" data-bs-toggle="modal" data-bs-target="#deleteCategory"  type="button"  class="btn btn-danger">Sil</button>
           </td>
       
     </tr>
@@ -37,4 +40,160 @@
       </div>
 
       </div>
+
+
+        
+<!-- Details Modal  Başlangıç -->
+<div class="modal fade" id="categoryDetails" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="authorDetails">Category Details</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+
+   
+
+      <div class="modal-body" *ngIf="form">
+        <form [formGroup]="form">
+
+   
+          <div class="form-group">
+            <label for="categoryName">Kategori Adı </label>
+            <input type="email" readonly class="form-control" id="categoryName" aria-describedby="categoryName" placeholder="Kategori Adını Giriniz"
+                   formControlName="categoryName">
+           
+          </div>
+
+
+    
+
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Kapat</button>
+      
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Details MODAL BİTİŞ -->
+
+
+
+
+
+
+
+      <!-- Create Author -->
+
+<div class="modal fade" id="createCategory" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="staticBackdropLabel">Kategori Oluştur</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body" *ngIf="myForm">
+        <form [formGroup]="myForm">
+          <div class="form-group">
+            <label for="categoryName">Kategori Adı</label>
+            <input type="email" id="categoryName"  aria-describedby="categoryName" placeholder="Enter categoryName"
+                   formControlName="categoryName">
+          
+          </div>
+         
+          <input type="file" (change)="onFileChanged($event)">
+         
+
+      </form>
+      
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Kapat</button>
+        <button type="button" class="btn btn-primary" data-bs-dismiss="modal" (click)="createCategory3()">Kategori Oluştur</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+<!-- Create Author BİTİŞ -->
+
+
+
+
+
+
+<!-- Update Author  Başlangıç -->
+<div class="modal fade" id="updateCategory" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="staticBackdropLabel">Update Category</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body" *ngIf="form">
+        <form [formGroup]="form">
+          <div class="form-group">
+            <label for="categoryName">Category Name</label>
+            <input type="email" class="form-control {{form.controls.categoryName.touched && form.controls.categoryName.errors ? 'is-invalid':'' }}" id="categoryName" aria-describedby="categoryName" placeholder="Enter categoryName"
+                   formControlName="categoryName">
+            <small id="titleRequired" class="text-danger" *ngIf="form.controls.categoryName.touched && form.controls.categoryName.errors && form.controls.categoryName.errors.required" >
+              Please Enter valid value
+            </small>
+          </div>
+
+
+      
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Kapat</button>
+        <button type="button" (click)="updateCategory()" class="btn btn-primary">Güncelle
+      
+      </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Update MODAL BİTİŞ -->
+
+
+
+
+
+
+<!-- Delete Modal Başlangıç -->
+<div class="modal fade" id="deleteCategory" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="deleteBookModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="deleteAuthor">Modal title</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+          <label for="areYouSureDelete">Silmek İstediğinize Emin Misiniz ?</label>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hayır</button>
+        <button type="button" class="btn btn-primary" data-bs-dismiss="modal" (click)="deleteCategory()"  >Evet
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- Delete Modal Bitiş -->
+
+
+
+
+      </div>
+
+      <div class="alert alert-success" role="alert">
+        {{succesMessage}}
+      </div>
+  
       

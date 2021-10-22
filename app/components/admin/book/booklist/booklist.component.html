@@ -2,112 +2,520 @@
 
 
   
-<div class="row">
-  <div class="col-sm-2"> <app-adminindex></app-adminindex></div>
-  
-    <div class="col-sm-8"> 
-  
-      <form #searchForm="ngForm" (ngSubmit)="onSearch(searchForm)">
+  <div class="row">
+    <div class="col-sm-2"> <app-adminindex></app-adminindex></div>
+    
+      <div class="col-sm-10"> 
+
         
-          <input type="text" ngModel name="bookName" placeholder="Enter Book Name And Author Name" class="form-control" id="bookName">
-       
+        <form [formGroup]="myForm2" *ngIf="myForm2" >
+          <div class="form-group">
+           
+            <input type="text" class="form-control" id="searchName" aria-describedby="searchName" placeholder="Aranacak Anahtar Kelimeyi Giriniz" formControlName="searchName">
           
-          <button class="btn btn-outline-success my-2 my-sm-0"  [disabled]="searchForm.invalid" type="submit">Search</button>
+          </div>
+    
+          <button type="submit" class="btn btn-primary" (click)="searchKaydet()">Ara</button>
+    </form>
+
+
+
+
+
+        <table class="table">
+          <thead>
+          <tr>
+        
+            <th scope="col">Kitap Adı</th>
+            <th scope="col">Yazar</th>
+            <th scope="col">Fiyat</th>
+            <th scope="col">Stok</th>
+            <th scope="col">Fonksiyon</th>
+            <th scope="col">
+              <button type="button" class="btn btn-outline-primary" data-bs-toggle="modal" (click)="kaydet2()" data-bs-target="#createBook">Kitap Ekle</button>
+             
+         
+         
+            </th>
+          </tr>
+          </thead>
+          <tbody>
+
+         
+
+           
+
+
+          <tr *ngFor="let book of books">
+          
+        
+            <td>{{book.bookName}}</td>
+            <td>{{book.author.authorName}}</td>
+    
+            <td>{{book.bookPrice}}</td>
+            <td>{{book.bookStock}}</td>
+          
+        
+            <td>
+              <button (click)="edit(book)" type="button"  data-bs-toggle="modal"  data-bs-target="#bookDetailsModal" class="btn btn-primary">Detay</button>&nbsp;
+              <button  data-bs-toggle="modal" data-bs-target="#staticBackdrop" (click)="edit(book)" class="btn btn-info">Düzenle</button>&nbsp;
+              <button (click)="deleteModal(book.id)" data-bs-toggle="modal" data-bs-target="#deleteBookModal" name="deleteBookButton"  class="btn btn-danger">Sil</button></td>
+        
+        
+          </tr>
+        
+          </tbody>
+        </table>
+  
+      
+      
+        </div>
+
+
+        
+<!-- Details Modal  Başlangıç -->
+<div class="modal fade" id="bookDetailsModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="bookDetailsModal">Book Details</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="d-flex justify-content-center">
+        
+        <img src="data:image/jpeg;base64,{{selectedBook?.picByte}}" form width="250px" height="200px">
+
+      </div>
+
+      <div class="modal-body" *ngIf="form">
+        <form [formGroup]="form">
+          <div class="form-group">
+            <label for="bookName">Book Name</label>
+            <input type="email" readonly class="form-control" id="bookName" aria-describedby="bookName" placeholder="Enter bookName"
+                   formControlName="bookName">
+           
+          </div>
+          
+        
+          
+
+          <div class="form-group">
+            <label for="bookPrice">Book Price</label>
+            <input type="email" readonly class="form-control" id="bookPrice" aria-describedby="bookPrice" placeholder="Enter bookPrice"
+                   formControlName="bookPrice">  
+          
+          </div>
+
+          <div class="form-group">
+            <label for="bookStock">Book bookStock</label>
+            <input type="email" readonly class="form-control" id="bookStock" aria-describedby="bookStock" placeholder="Enter bookStock"
+                   formControlName="bookStock" >  
+         
+          </div>
+
+         
+         
+         
+
+          <div class="form-group">
+            <label for="bookDetails">Book Details</label>
+            <textarea class="form-control" readonly id="bookDetails" rows="3" placeholder="Enter bookDetails"  formControlName="bookDetails"></textarea>
+          </div>
+
+
+          <div class="form-group">
+            <label for="catego">Category Name</label>
+            <input type="email" readonly class="form-control" id="catego" aria-describedby="catego" placeholder="Enter catego"
+                   formControlName="categoryId">  
+          
+          </div>
+
+
+          <div class="form-group">
+            <label for="authorName">Book Author</label>
+            <input type="email" readonly class="form-control" id="authorName" aria-describedby="authorName" placeholder="Enter authorName"
+                   formControlName="authorId">  
+      
+          </div>
+
+        
+
         </form>
-      <table class="table">
-        <thead>
-        <tr>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
       
-          <th scope="col">Name</th>
-          <th scope="col">Author</th>
-          <th scope="col">Price</th>
-          <th scope="col">Stock</th>
-          <th scope="col">Function</th>
-      
-        </tr>
-        </thead>
-        <tbody>
-        <tr *ngFor="let book of books">
-        
-      
-          <td>{{book.bookName}}</td>
-          <td>{{book.author.authorName}}</td>
-          <td>{{book.bookPrice}}</td>
-          <td>{{book.bookStock}}</td>
-        
-      
-          <td>
-            <button (click)="bookDetails(book.id)" type="button" class="btn btn-primary">Details</button>
-            <button (click)="updateBook(book.id)" type="button" class="btn btn-info">Edit</button>&nbsp;
-            <button (click)="deleteBook1(book.id)" type="button" name="deleteBookButton"  class="btn btn-danger">Delete</button></td>
-      
-      
-        </tr>
-      
-        </tbody>
-      </table>
+      </div>
+    </div>
+  </div>
+</div>
 
-
-        <div class="container row">
-          <div class="col-md-12">
-              <h1>Upload Image</h1>
-          </div>
-      </div>
-      <div class="container row">
-          <div class="col-md-6">
-              <input type="file" (change)="onFileChanged($event)">
-          </div>
-          <div class="col-md-6">
-              <input type="button" (click)="onUpload()" value="upload">
-          </div>
-      </div>
-      <hr />
-      <div class="container row">
-          <div class="col-md-12">
-              <div *ngIf=message>{{message}}</div>
-          </div>
-      </div>
-      <div class="container row">
-          <div class="col-md-6">
-              <input type="text" class="form-control" id="name" placeholder="image name" [(ngModel)]="imageName"
-                  name="name" />
-          </div>
-          <div class="col-md-6">
-              <input type="button" (click)="getImage()" value="Get Image">
-          </div>
-      </div>
-      <div class="container row">
-          <div class="col-md-12">
-              <div *ngIf=retrievedImage>
-                  <img [src]="retrievedImage">
-              </div>
-          </div>
-      </div>  
-       
-    
-      </div>
-
-  
-
+<!-- Details MODAL BİTİŞ -->
   
 
 
-    
-    
-    <!-- <div class="container">
-      <div class="row">
-        <div id="custom-search-input">
-          <div class="input-group col-md-12" style="text-align: center">
-            <input type="text" class="search-query form-control" placeholder="Search With BookName & Author" ngModel name="bookName"  name="bookName"/>
-            <span class="input-group-btn">
-              <button  (click)="findBookName(bookName)" class="btn btn-danger" type="button" >Ara
-                <span class=" glyphicon glyphicon-search"></span>
-              </button>
-            </span>
+
+
+<!-- Update Modal  Başlangıç -->
+<div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="staticBackdropLabel">Update Modal</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="d-flex justify-content-center">
+        
+        <img src="data:image/jpeg;base64,{{selectedBook?.picByte}}" form width="250px" height="200px">
+
+      </div>
+
+      <div class="modal-body" *ngIf="form">
+        <form [formGroup]="form">
+          <div class="form-group">
+            <label for="bookName">Book Name</label>
+            <input type="email" class="form-control {{form.controls.bookName.touched && form.controls.bookName.errors ? 'is-invalid':'' }}" id="bookName" aria-describedby="bookName" placeholder="Enter bookName"
+                   formControlName="bookName">
+            <small id="titleRequired" class="text-danger" *ngIf="form.controls.bookName.touched && form.controls.bookName.errors && form.controls.bookName.errors.required" >
+              Please Enter valid value
+            </small>
+          </div>
+
+          <div class="form-group">
+            <label for="bookPrice">Book Price</label>
+            <input type="email" class="form-control {{form.controls.bookPrice.touched && form.controls.bookPrice.errors ? 'is-invalid':'' }}" id="bookPrice" aria-describedby="bookPrice" placeholder="Enter bookPrice"
+                   formControlName="bookPrice">  
+            <small id="titleRequired" class="text-danger" *ngIf="form.controls.bookPrice.touched && form.controls.bookPrice.errors && form.controls.bookPrice.errors.required" >
+              Please Enter valid value
+            </small>
+          </div>
+
+          <div class="form-group">
+            <label for="bookStock">Book bookStock</label>
+            <input type="email" class="form-control {{form.controls.bookStock.touched && form.controls.bookStock.errors ? 'is-invalid':'' }}" id="bookStock" aria-describedby="bookStock" placeholder="Enter bookStock"
+                   formControlName="bookStock" >  
+            <small id="titleRequired" class="text-danger" *ngIf="form.controls.bookStock.touched && form.controls.bookStock.errors && form.controls.bookStock.errors.required" >
+              Please Enter valid value
+            </small>
+          </div>
+
+         
+         
+         
+
+          <div class="form-group">
+            <label for="bookDetails">Book Details</label>
+            <textarea class="form-control" id="bookDetails" rows="3" placeholder="Enter bookDetails"  formControlName="bookDetails"></textarea>
+          </div>
+
+
+        
+
+          <div class="row">
+
+            <div class="col">
+
+
+              <label for="authorId">Yazar</label>
+           
+                  <select formControlName="authorId"  class="form-control {{form.controls.authorId.touched && form.controls.authorId.errors ? 'is-invalid':'' }}" class="form-select" required>
+                
+                    <option id="authorId" class="form-control" *ngFor="let author of authors" value="{{author.id}}" >{{author.authorName}}</option>
+            
+                  </select>
+                  <small id="titleRequired" class="text-danger" *ngIf="form.controls.authorId.touched && form.controls.authorId.errors && form.controls.authorId.errors.required" >
+                    Bu alan Boş Bırakılamaz
+            </small>
+                  
+         
+          
+
+            </div>
+            <div class="col">
+
+                <!--<input type="text" ngModel name="authorId" class="form-control" id="authorId" aria-describedby="emailHelp">
+            --->
+            <label for="categoryId">Kategori</label>
+            
+                <select formControlName="categoryId"  class="form-control {{form.controls.categoryId.touched && form.controls.categoryId.errors ? 'is-invalid':'' }}" class="form-select" required>
+          
+                  <option id="categoryId"  class="form-control" *ngFor="let category of categories" value="{{category.id}}" >{{category.categoryName}}</option>
+          
+                </select>
+                <small id="titleRequired" class="text-danger" *ngIf="form.controls.categoryId.touched && form.controls.categoryId.errors && form.controls.categoryId.errors.required" >
+                  Bu alan Boş Bırakılamaz
+          </small>
+                
+            
+        
+
+
+            </div>
+
+
+            
+   
+          </div>
+
+
+         
+
+        
+
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        <button type="button" (click)="guncelle()" class="btn btn-primary">Update Book
+      
+      </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Update MODAL BİTİŞ -->
+  
+
+<!-- Create Book -->
+
+
+
+<div class="modal fade" id="createBook" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="staticBackdropLabel">Kitap Ekle</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body" *ngIf="myForm">
+      
+        <form  [formGroup]="myForm">
+          
+         <div class="row">
+        
+          <div class="col">
+            
+            <label for="bookName">Kitap Adı</label>
+              <input type="email" id="bookName" class="form-control {{myForm.controls.bookName.touched && myForm.controls.bookName.errors ? 'is-invalid':'' }}"
+                 aria-describedby="bookName" placeholder="Kitap Adı Giriniz"formControlName="bookName">
+
+             <small id="titleRequired" class="text-danger" *ngIf="myForm.controls.bookName.touched && myForm.controls.bookName.errors && myForm.controls.bookName.errors.required" >
+               Bu alan Boş Bırakılamaz
+            </small>
+        
+                 
+          </div>
+  
+          <div class="col">
+            <label for="bookDetails">Kitap Detayı</label>
+            <input type="email" id="bookDetails"  class="form-control {{myForm.controls.bookDetails.touched && myForm.controls.bookDetails.errors ? 'is-invalid':'' }}"  aria-describedby="bookDetails" placeholder="Kitap Detayı Giriniz"
+                   formControlName="bookDetails">
+          
+                   <small id="titleRequired" class="text-danger" *ngIf="myForm.controls.bookDetails.touched && myForm.controls.bookDetails.errors && myForm.controls.bookDetails.errors.required" >
+                    Bu alan Boş Bırakılamaz
+            </small>
+          
+          </div>
+        
+        </div>
+          <div class="row">
+          <div class="col">
+            <label for="bookPrice">Kitap Fiyatı</label>
+            <input type="number"  class="form-control {{myForm.controls.bookPrice.touched && myForm.controls.bookPrice.errors ? 'is-invalid':'' }}" id="bookPrice" aria-describedby="bookPrice" placeholder="Kitap Fiyatı Giriniz"
+                   formControlName="bookPrice">  
+           
+                   <small id="titleRequired" class="text-danger" *ngIf="myForm.controls.bookPrice.touched && myForm.controls.bookPrice.errors && myForm.controls.bookPrice.errors.required" >
+                    Bu alan Boş Bırakılamaz
+            </small>
+                  
+
+          </div>
+
+          
+
+          <div class="col">
+            <label for="bookStock">Kitap Stok</label>
+            <input type="number" class="form-control {{myForm.controls.bookStock.touched && myForm.controls.bookStock.errors ? 'is-invalid':'' }}"  id="bookPrice" aria-describedby="bookStock" placeholder="Kitap Adedi Giriniz"
+                   formControlName="bookStock">  
+            <small id="titleRequired" class="text-danger" *ngIf="myForm.controls.bookStock.touched && myForm.controls.bookStock.errors && myForm.controls.bookStock.errors.required" >
+                    Bu alan Boş Bırakılamaz
+            </small>
+                  
           </div>
         </div>
+         
+          <div class="row">
+
+            <div class="col">
+
+
+              <label for="authoridim">Yazar</label>
+           
+                  <select formControlName="authorId"  class="form-control {{myForm.controls.authorId.touched && myForm.controls.authorId.errors ? 'is-invalid':'' }}" class="form-select" required>
+                
+                    <option id="authorId" class="form-control" *ngFor="let author of authors" value="{{author.id}}" >{{author.authorName}}</option>
+            
+                  </select>
+                  <small id="titleRequired" class="text-danger" *ngIf="myForm.controls.authorId.touched && myForm.controls.authorId.errors && myForm.controls.authorId.errors.required" >
+                    Bu alan Boş Bırakılamaz
+            </small>
+                  
+         
+          
+
+            </div>
+            <div class="col">
+
+                <!--<input type="text" ngModel name="authorId" class="form-control" id="authorId" aria-describedby="emailHelp">
+            --->
+            <label for="categoryId">Kategori</label>
+            
+                <select formControlName="categoryId"  class="form-control {{myForm.controls.categoryId.touched && myForm.controls.categoryId.errors ? 'is-invalid':'' }}" class="form-select" required>
+          
+                  <option id="categoryId"  class="form-control" *ngFor="let category of categories" value="{{category.id}}" >{{category.categoryName}}</option>
+          
+                </select>
+                <small id="titleRequired" class="text-danger" *ngIf="myForm.controls.categoryId.touched && myForm.controls.categoryId.errors && myForm.controls.categoryId.errors.required" >
+                  Bu alan Boş Bırakılamaz
+          </small>
+                
+            
+        
+
+
+            </div>
+
+
+            
+        
+    
+         
+          
+
+        
+
+
+          <input type="file" (change)="onFileChanged($event)">
+            <div *ngIf=message>{{message}}</div>
+
+   
+          </div>
+
+      </form>
+      
+
+
+
       </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Kapat</button>
+        <button type="button" class="btn btn-primary" (click)="kaydet3()">Kaydet</button>
+      </div>
+
+
     
+
+    </div>
+  </div>
+</div>
+
     
-    </div> -->
+<!-- Create Book BİTİŞ -->
+
+
+
+
+
+<!-- Delete Modal Başlangıç -->
+<div class="modal fade" id="deleteBookModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="deleteBookModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="deleteBookModal">Modal title</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+          <label for="bookDetails">Silmek İstediğinize Emin Misiniz ?</label>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary" data-bs-dismiss="modal" (click)="deleteBook1()" >Yes
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- Delete Modal Bitiş -->
+
+
+
+  
     
+      
+      <!-- <div class="container">
+        <div class="row">
+          <div id="custom-search-input">
+            <div class="input-group col-md-12" style="text-align: center">
+              <input type="text" class="search-query form-control" placeholder="Search With BookName & Author" ngModel name="bookName"  name="bookName"/>
+              <span class="input-group-btn">
+                <button  (click)="findBookName(bookName)" class="btn btn-danger" type="button" >Ara
+                  <span class=" glyphicon glyphicon-search"></span>
+                </button>
+              </span>
+            </div>
+          </div>
+        </div>
+      
+      
+      </div> -->
+
+
+
+
+
+
+
+
+
+<!--
+
+
+    
+      <div class="container row">
+        <div class="col-md-12">
+            <h1>Upload Image</h1>
+        </div>
+    </div>
+    <div class="container row">
+        <div class="col-md-6">
+            <input type="file" (change)="onFileChanged($event)">
+        </div>
+        <div class="col-md-6">
+            <input type="button" (click)="onUpload()" value="upload">
+        </div>
+    </div>
+    <hr />
+    <div class="container row">
+        <div class="col-md-12">
+            <div *ngIf=message>{{message}}</div>
+        </div>
+    </div>
+    <div class="container row">
+        <div class="col-md-6">
+            <input type="text" class="form-control" id="name" placeholder="image name" [(ngModel)]="imageName"
+                name="name" />
+        </div>
+        <div class="col-md-6">
+            <input type="button" (click)="getImage()" value="Get Image">
+        </div>
+    </div>
+    <div class="container row">
+        <div class="col-md-12">
+            <div *ngIf=retrievedImage>
+                <img [src]="retrievedImage">
+            </div>
+        </div>
+    </div>  
+     
+  -->

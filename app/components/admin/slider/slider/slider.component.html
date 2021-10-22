@@ -1,0 +1,145 @@
+<div class="container">
+    <div class="row">
+        <div class="col-sm-2"> <app-adminindex></app-adminindex></div>
+        <div class="col-sm-8"> 
+  
+
+            
+            <table class="table">
+                <thead>
+                <tr>
+              
+                  <th scope="col">Resim Adı</th>
+                  <th scope="col">Görünürlük</th>
+                  <th scope="col">İşlem</th>
+                  <th><button    data-bs-toggle="modal" (click)="createSliderImageModalData()" data-bs-target="#createSliderImage" type="button" class="btn btn-primary">Resim Ekle</button>
+                  </th>
+                </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let image of images">
+                        <img src="data:image/jpeg;base64,{{image?.picByte}}" form width="100px" height="100px">
+
+                          
+                        <td>
+                       
+                          
+                          <div class="modal-body" *ngIf="myForm">
+                            <form [formGroup]="myForm">
+                              
+                              <select  class="form-select" (change)="onChange($event,image.id)"  formControlName="sliderTrueAndFalseStatement"  required>
+                                <option id="sliderTrueAndFalseStatement" class="form-control">Durum :{{image.id}} {{image.state}} </option>
+                                <option id="sliderTrueAndFalseStatement" class="form-control" value="true"  >Görünür(True)</option>
+                                <option id="sliderTrueAndFalseStatement"  class="form-control" value="false"   >Gizli(False)</option>
+      
+                        
+                              </select>
+                        
+
+                                <div class="form-group">
+
+                                  </div>
+
+                                </form>
+                          </div>
+
+                      </td>
+                        
+                      
+                        <td>
+                            <button  data-bs-toggle="modal" data-bs-target="#deleteSliderImageModal"  type="button" (click)="sliderImageDeleteId(image.id)"  class="btn btn-danger">Sil</button>
+                          </td>
+                  
+                </tr>
+              
+               
+              
+            
+            
+                </tbody>
+              </table>
+
+
+
+         </div>
+     </div>
+
+</div>
+
+
+
+<!-- Create Author -->
+
+
+
+<div class="modal fade" id="createSliderImage" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="staticBackdropLabel">Resim Ekle</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body" *ngIf="form">
+          <form [formGroup]="form">
+            
+      
+
+            <div class="form-group">
+                <label for="sliderToImageHideAndUnHide">Görünürlük Durumunu Seçiniz</label>
+                
+                <select formControlName="sliderState"  class="form-select" required>
+            
+                    <option id="sliderState" class="form-control" value="true" >Görünür</option>
+                    <option id="sliderState" class="form-control" value="false" >Gizli</option>
+
+                  </select>
+
+              </div>
+
+            
+  
+            <input type="file" (change)="onFileChanged($event)">
+           
+             
+        </form>
+        
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-primary" data-bs-dismiss="modal" (click)="createSliderImage()" >Resim Ekle</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+      
+  <!-- Create Author BİTİŞ -->
+
+
+  
+            
+  
+<!-- Delete Modal Başlangıç -->
+<div class="modal fade" id="deleteSliderImageModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="deleteBookModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="deleteSliderImageModal">Modal title</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+          <label for="bookDetails">Silmek İstediğinize Emin Misiniz ?</label>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Kapat</button>
+        <button type="button" class="btn btn-primary" data-bs-dismiss="modal" (click)="deleteSliderImage()" >Sil
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- Delete Modal Bitiş -->
+
+
+
+
