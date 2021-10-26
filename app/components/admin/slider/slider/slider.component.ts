@@ -5,6 +5,7 @@ import { catchError } from 'rxjs/operators';
 import { Image } from 'src/app/service/image/image';
 import { ImageService } from 'src/app/service/image/image.service';
 import { Slider } from 'src/app/service/slider/slider';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-slider',
@@ -54,7 +55,15 @@ export class SliderComponent implements OnInit {
     console.log(person);
     this.imageService.updateImageInSliderTrueOrFalse(this.selectedId,person).subscribe((data => {
       console.log(data);
-      window.location.reload();
+      Swal.fire({
+        position: 'center',
+        icon: 'success',
+        title: 'Resim Görünümü Değiştirildi',
+        showConfirmButton: true,
+       
+      })
+
+     // window.location.reload();
 
     }))
   
@@ -70,6 +79,14 @@ export class SliderComponent implements OnInit {
   deleteSliderImage(){
     this.imageService.deleteSliderImage(this.selectedId).subscribe((data =>{
       console.log(data);
+      Swal.fire({
+        position: 'center',
+        icon: 'success',
+        title: 'Resim Başarıyla Silindi',
+        showConfirmButton: true,
+       
+      })
+
       this.getAllImages();
     }))
     
@@ -111,7 +128,17 @@ export class SliderComponent implements OnInit {
                 console.warn(payload);
                
                 throw  err;
-              })).subscribe(food=>{
+              })).subscribe(data=>{
+
+                Swal.fire({
+                  position: 'center',
+                  icon: 'success',
+                  title: 'Kayıt Başarılı!',
+                  showConfirmButton: true,
+                 
+                })
+
+                this.getAllImages();
                
               });
             },1000)

@@ -6,33 +6,44 @@
     <div class="col-sm-2"> <app-adminindex></app-adminindex></div>
     
       <div class="col-sm-10"> 
-
-        
+   
+        <div class="row">
         <form [formGroup]="myForm2" *ngIf="myForm2" >
-          <div class="form-group">
+        
+          <div class="row justify-content-md-center">
+  
+            <div class="col-sm-6 center">
+  
+              <div class="input-group" >
+                <div class="form-outline" style="width:400px; margin-top:10px;">
            
             <input type="text" class="form-control" id="searchName" aria-describedby="searchName" placeholder="Aranacak Anahtar Kelimeyi Giriniz" formControlName="searchName">
           
           </div>
     
-          <button type="submit" class="btn btn-primary" (click)="searchKaydet()">Ara</button>
-    </form>
-
-
+          <button type="submit" class="btn btn-primary" (keydown.enter)="searchBook()" (click)="searchBook()">Ara</button>
+  
+      </div>
+          </div>
+          </div>
+       
+        </form>
+     
+      </div>
 
 
 
         <table class="table">
           <thead>
           <tr>
-        
+            <th scope="col">Kitap Resim</th>
             <th scope="col">Kitap Adı</th>
             <th scope="col">Yazar</th>
             <th scope="col">Fiyat</th>
             <th scope="col">Stok</th>
-            <th scope="col">Fonksiyon</th>
+            <th scope="col">İşlemler</th>
             <th scope="col">
-              <button type="button" class="btn btn-outline-primary" data-bs-toggle="modal" (click)="kaydet2()" data-bs-target="#createBook">Kitap Ekle</button>
+              <button type="button" class="btn btn-outline-primary" data-bs-toggle="modal" (click)="createBookModal()" data-bs-target="#createBook">Kitap Ekle</button>
              
          
          
@@ -48,7 +59,18 @@
 
           <tr *ngFor="let book of books">
           
-        
+            <div class="image-upload">
+              <label for="file-input">
+                <img src="data:image/jpeg;base64,{{book?.picByte}}"   form width="100px" height="100px">
+                
+              </label>
+            
+              <input type="file" (change)="onFileChanged($event)">
+            </div>
+
+            
+           
+
             <td>{{book.bookName}}</td>
             <td>{{book.author.authorName}}</td>
     
@@ -57,8 +79,8 @@
           
         
             <td>
-              <button (click)="edit(book)" type="button"  data-bs-toggle="modal"  data-bs-target="#bookDetailsModal" class="btn btn-primary">Detay</button>&nbsp;
-              <button  data-bs-toggle="modal" data-bs-target="#staticBackdrop" (click)="edit(book)" class="btn btn-info">Düzenle</button>&nbsp;
+              <button (click)="updateBookModal(book)" type="button"  data-bs-toggle="modal"  data-bs-target="#bookDetailsModal" class="btn btn-primary">Detay</button>&nbsp;
+              <button  data-bs-toggle="modal" data-bs-target="#staticBackdrop" (click)="updateBookModal(book)" class="btn btn-info">Düzenle</button>&nbsp;
               <button (click)="deleteModal(book.id)" data-bs-toggle="modal" data-bs-target="#deleteBookModal" name="deleteBookButton"  class="btn btn-danger">Sil</button></td>
         
         
@@ -78,7 +100,7 @@
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="bookDetailsModal">Book Details</h5>
+        <h5 class="modal-title" id="bookDetailsModal"> Kitap Detayı</h5>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="d-flex justify-content-center">
@@ -89,61 +111,100 @@
 
       <div class="modal-body" *ngIf="form">
         <form [formGroup]="form">
-          <div class="form-group">
-            <label for="bookName">Book Name</label>
-            <input type="email" readonly class="form-control" id="bookName" aria-describedby="bookName" placeholder="Enter bookName"
-                   formControlName="bookName">
-           
+          <div class="row">
+
+            <div class="col">
+
+              <div class="form-group">
+                <label for="bookName">Kitap Adı</label>
+                <input type="email" readonly class="form-control" id="bookName" aria-describedby="bookName" placeholder="Enter bookName"
+                       formControlName="bookName">
+               
+              </div>
+
+            </div>
+
+            <div class="col">
+
+
+              <div class="form-group">
+                <label for="bookPrice">Kitap Fiyat </label>
+                <input type="email" readonly class="form-control" id="bookPrice" aria-describedby="bookPrice" placeholder="Enter bookPrice"
+                       formControlName="bookPrice">  
+              
+              </div>
+            </div>
           </div>
-          
         
           
+        
+          <div class="row">
 
-          <div class="form-group">
-            <label for="bookPrice">Book Price</label>
-            <input type="email" readonly class="form-control" id="bookPrice" aria-describedby="bookPrice" placeholder="Enter bookPrice"
-                   formControlName="bookPrice">  
+            <div class="col">
+
+
+              <div class="form-group">
+                <label for="bookStock"> Kitap Stok</label>
+                <input type="email" readonly class="form-control" id="bookStock" aria-describedby="bookStock" placeholder="Enter bookStock"
+                       formControlName="bookStock" >  
+             
+              </div>
+
+
+            </div>
+
+            <div class="col">
+
+
+              <div class="form-group">
+                <label for="bookDetails">Kitap Detay</label>
+                <textarea class="form-control" readonly id="bookDetails" rows="3" placeholder="Enter bookDetails"  formControlName="bookDetails"></textarea>
+              </div>
+            </div>
+          </div>
           
-          </div>
 
-          <div class="form-group">
-            <label for="bookStock">Book bookStock</label>
-            <input type="email" readonly class="form-control" id="bookStock" aria-describedby="bookStock" placeholder="Enter bookStock"
-                   formControlName="bookStock" >  
-         
-          </div>
 
          
          
          
 
-          <div class="form-group">
-            <label for="bookDetails">Book Details</label>
-            <textarea class="form-control" readonly id="bookDetails" rows="3" placeholder="Enter bookDetails"  formControlName="bookDetails"></textarea>
-          </div>
+
+          <div class="row">
+
+            <div class="col">
+
+              <div class="form-group">
+                <label for="catego">Kategori Adı</label>
+                <input type="email" readonly class="form-control" id="catego" aria-describedby="catego" placeholder="Enter catego"
+                       formControlName="categoryId">  
+              
+              </div>
 
 
-          <div class="form-group">
-            <label for="catego">Category Name</label>
-            <input type="email" readonly class="form-control" id="catego" aria-describedby="catego" placeholder="Enter catego"
-                   formControlName="categoryId">  
+            </div>
+
+            <div class="col">
+
+              <div class="form-group">
+                <label for="authorName">Kitap Yazarı</label>
+                <input type="email" readonly class="form-control" id="authorName" aria-describedby="authorName" placeholder="Enter authorName"
+                       formControlName="authorId">  
           
+              </div>
+
+            </div>
           </div>
 
 
-          <div class="form-group">
-            <label for="authorName">Book Author</label>
-            <input type="email" readonly class="form-control" id="authorName" aria-describedby="authorName" placeholder="Enter authorName"
-                   formControlName="authorId">  
-      
-          </div>
+
 
         
 
         </form>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Kapat</button>
       
       </div>
     </div>
@@ -161,7 +222,7 @@
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="staticBackdropLabel">Update Modal</h5>
+        <h5 class="modal-title" id="staticBackdropLabel">Kitap Güncelle</h5>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="d-flex justify-content-center">
@@ -172,42 +233,70 @@
 
       <div class="modal-body" *ngIf="form">
         <form [formGroup]="form">
-          <div class="form-group">
-            <label for="bookName">Book Name</label>
-            <input type="email" class="form-control {{form.controls.bookName.touched && form.controls.bookName.errors ? 'is-invalid':'' }}" id="bookName" aria-describedby="bookName" placeholder="Enter bookName"
-                   formControlName="bookName">
-            <small id="titleRequired" class="text-danger" *ngIf="form.controls.bookName.touched && form.controls.bookName.errors && form.controls.bookName.errors.required" >
-              Please Enter valid value
-            </small>
+          <div class="row">
+
+            <div class="col">
+
+              <div class="form-group">
+                <label for="bookName">Kitap Adı</label>
+                <input type="email" class="form-control {{form.controls.bookName.touched && form.controls.bookName.errors ? 'is-invalid':'' }}" id="bookName" aria-describedby="bookName" placeholder="Enter bookName"
+                       formControlName="bookName">
+                <small id="titleRequired" class="text-danger" *ngIf="form.controls.bookName.touched && form.controls.bookName.errors && form.controls.bookName.errors.required" >
+                 Bu Alan Boş Bırakılamaz
+                </small>
+              </div>
+            </div>
+
+
+            <div class="col">
+              <div class="form-group">
+                <label for="bookPrice">Kitap Fiyat</label>
+                <input type="email" class="form-control {{form.controls.bookPrice.touched && form.controls.bookPrice.errors ? 'is-invalid':'' }}" id="bookPrice" aria-describedby="bookPrice" placeholder="Enter bookPrice"
+                       formControlName="bookPrice">  
+                <small id="titleRequired" class="text-danger" *ngIf="form.controls.bookPrice.touched && form.controls.bookPrice.errors && form.controls.bookPrice.errors.required" >
+                  Bu Alan Boş Bırakılamaz
+                </small>
+              </div>
+
+
+            </div>
+
+          </div>
+        
+          <div class="row">
+            <div class="col">
+
+              <div class="form-group">
+                <label for="bookStock">Kitap Stok</label>
+                <input type="email" class="form-control {{form.controls.bookStock.touched && form.controls.bookStock.errors ? 'is-invalid':'' }}" id="bookStock" aria-describedby="bookStock" placeholder="Enter bookStock"
+                       formControlName="bookStock" >  
+                <small id="titleRequired" class="text-danger" *ngIf="form.controls.bookStock.touched && form.controls.bookStock.errors && form.controls.bookStock.errors.required" >
+                  Bu Alan Boş Bırakılamaz
+                </small>
+              </div>
+    
+
+            </div>
+
+            <div class="col">
+              <div class="form-group">
+                <label for="bookDetails">Kitap Detayı</label>
+                <textarea class="form-control" id="bookDetails" rows="3" placeholder="Enter bookDetails"  formControlName="bookDetails"></textarea>
+              </div>
+    
+
+            </div>
           </div>
 
-          <div class="form-group">
-            <label for="bookPrice">Book Price</label>
-            <input type="email" class="form-control {{form.controls.bookPrice.touched && form.controls.bookPrice.errors ? 'is-invalid':'' }}" id="bookPrice" aria-describedby="bookPrice" placeholder="Enter bookPrice"
-                   formControlName="bookPrice">  
-            <small id="titleRequired" class="text-danger" *ngIf="form.controls.bookPrice.touched && form.controls.bookPrice.errors && form.controls.bookPrice.errors.required" >
-              Please Enter valid value
-            </small>
-          </div>
 
-          <div class="form-group">
-            <label for="bookStock">Book bookStock</label>
-            <input type="email" class="form-control {{form.controls.bookStock.touched && form.controls.bookStock.errors ? 'is-invalid':'' }}" id="bookStock" aria-describedby="bookStock" placeholder="Enter bookStock"
-                   formControlName="bookStock" >  
-            <small id="titleRequired" class="text-danger" *ngIf="form.controls.bookStock.touched && form.controls.bookStock.errors && form.controls.bookStock.errors.required" >
-              Please Enter valid value
-            </small>
-          </div>
+          
 
+          
          
          
          
 
-          <div class="form-group">
-            <label for="bookDetails">Book Details</label>
-            <textarea class="form-control" id="bookDetails" rows="3" placeholder="Enter bookDetails"  formControlName="bookDetails"></textarea>
-          </div>
-
+         
 
         
 
@@ -258,6 +347,10 @@
           </div>
 
 
+          <div class="form-group">
+            <input type="file" (change)="onFileChanged($event)">
+            </div>
+
          
 
         
@@ -265,8 +358,8 @@
         </form>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-        <button type="button" (click)="guncelle()" class="btn btn-primary">Update Book
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Kapat</button>
+        <button type="button" (click)="updateBook()" class="btn btn-primary">Kitabı Güncelle
       
       </button>
       </div>
@@ -410,7 +503,7 @@
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Kapat</button>
-        <button type="button" class="btn btn-primary" (click)="kaydet3()">Kaydet</button>
+        <button type="button" class="btn btn-primary" data-bs-dismiss="modal" (click)="createBook()">Kaydet</button>
       </div>
 
 
@@ -519,3 +612,4 @@
     </div>  
      
   -->
+  

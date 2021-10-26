@@ -7,72 +7,16 @@
 
   <div class="container">
     <div class="row">
-       <div class="col-lg-2">
-       
-
-        
-
-
-         <h4>Menü</h4>
-         <h6><i class="bi bi-house"></i> Anasayfa</h6>
-          <h6><i class="bi bi-table"></i>
-            Kategoriler</h6>
-            <h6><i class="bi bi-compass-fill"></i>
-              Keşfet</h6>
-              <h6><i class="bi bi-sort-up"></i>
-                Trendler</h6>
-                <h6><i class="bi bi-chat-quote"></i>
-                  Sık Okunanlar</h6>
-        
-
-         <ul>
-           <thead>
+   
   
-            <tr *ngFor="let categories of category">
-            
-              
-                  <a routerLink=""  (click)="categoriesDetails(categories.id)">
-
-                    <td>{{categories.categoryName}}</td>
-                
-                </a>
-                
-             
-
-            </tr>
-            </thead>
-         </ul>
-
-         <h6>Haftanın Yazarları</h6>
-         <ul>
-
-            <thead>
-  
-               <tr *ngFor="let author of authors">
-               
-                  <a routerLink=""  (click)="authorDetails(author.id)">
-                     <td>{{author.authorName}}</td>
-              
-                  </a>
-                  
-               </tr>
-               </thead>
-         </ul>
-
-       
-       </div>
-    
-       <div class="col-lg-8">
-
-       
-        <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
+      <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
           <ol class="carousel-indicators">
             <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
             <li data-target="#carouselExampleIndicators" *ngFor="let resim of sliderImages" ></li>
           </ol>
           <div class="carousel-inner">
             <div class="carousel-item active">
-              <img class="d-block w-100" src="assets/img/resim1.jpg" width="100%" height="500px" alt="First slide">
+              <img class="d-block w-100" src="assets/img/kitapindirimli.jpg" width="100%" height="500px" alt="First slide">
             </div>
             <div class="carousel-item" *ngFor="let resim of sliderImages">
               <img src="data:image/jpeg;base64,{{resim?.picByte}}" width="100%" height="500px" >
@@ -93,20 +37,12 @@
         </div>
 
     
-
-        
-              
         
            
  
             
         
         
-
-
-       
-
-            </div>
 
     </div>
 
@@ -145,13 +81,19 @@
                                     <div class="team-content">
                                          <h3 class="title">{{authorm.authorName}}</h3>
                                       
-                                      <span class="post">Marketing Consultant</span>
+                                      <span class="post"></span>
+                                      
                                     </div>
-                                        <ul class="social"> 
-                                          <button>
-                                          <i class="fa fa-info-circle fa-fw mr-1"></i>
-                                       Hakkında</button>
-                                         </ul>
+
+                                    <ul class="social"> 
+                                     
+                                        <a href="#" class="btn btn-outline-success"> <i class="fa fa-info-circle fa-fw mr-1"> </i>Hakkında</a>
+                                    
+                                     
+                                    
+                                      </ul>
+
+                                       
                             </div>
                             </a>
                           </div>
@@ -167,11 +109,11 @@
 
               </div>
                     <!--.carousel-inner-->
-                    <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
+                    <a class="carousel-control-prev" (click)="minusPage(pagePlusAndMinus,$event)" role="button" data-slide="prev">
                       <span class="carousel-control-prev-icon" aria-hidden="true"></span>
                       <span class="sr-only">Previous</span>
                     </a>
-                    <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
+                    <a class="carousel-control-next" (click)="plusPage(pagePlusAndMinus,$event)" role="button" data-slide="next">
                       <span class="carousel-control-next-icon" aria-hidden="true"></span>
                       <span class="sr-only">Next</span>
                     </a>
@@ -180,6 +122,25 @@
           <!--.Carousel-->
 
           <!-- Carousel controls -->
+          
+<nav aria-label="Page navigation example">
+  <ul class="pagination justify-content-center">
+    <li class="page-item disabled">
+      <a class="page-link" href="#" tabindex="-1">Geri</a>
+    </li>
+    <li class="page-item" *ngFor="let p of pages; let i=index"><a class="page-link"  (click)="setPage(i,$event)">{{i+1}}</a></li>
+  
+    <li class="page-item">
+      <a class="page-link" >İleri</a>
+    </li>
+  </ul>
+</nav>
+
+
+
+
+
+
 		
       </div>
   </div>
@@ -200,199 +161,51 @@
 
 </html>
 
-
-
 <head>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans">
-<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
-<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
-<style>
-body {
-	font-family: "Open Sans", sans-serif;
-}
-h2 {
-	color: #000;
-	font-size: 26px;
-	font-weight: 300;
-	text-align: center;
-	text-transform: uppercase;
-	position: relative;
-	margin: 30px 0 80px;
-}
-h2 b {
-	color: #ffc000;
-}
-h2::after {
-	content: "";
-	width: 100px;
-	position: absolute;
-	margin: 0 auto;
-	height: 4px;
-	background: rgba(0, 0, 0, 0.2);
-	left: 0;
-	right: 0;
-	bottom: -20px;
-}
-.carousel {
-	margin: 50px auto;
-	padding: 0 70px;
-}
-.carousel .carousel-item {
-	min-height: 330px;
-	text-align: center;
-	overflow: hidden;
-}
-.carousel .carousel-item .img-box {
-	height: 160px;
-	width: 100%;
-	position: relative;
-}
-.carousel .carousel-item img {	
-	max-width: 100%;
-	max-height: 100%;
-	display: inline-block;
-	position: absolute;
-	bottom: 0;
-	margin: 0 auto;
-	left: 0;
-	right: 0;
-}
-.carousel .carousel-item h4 {
-	font-size: 18px;
-	margin: 10px 0;
-}
-.carousel .carousel-item .btn {
-	color: #333;
-	border-radius: 0;
-	font-size: 11px;
-	text-transform: uppercase;
-	font-weight: bold;
-	background: none;
-	border: 1px solid #ccc;
-	padding: 5px 10px;
-	margin-top: 5px;
-	line-height: 16px;
-}
-.carousel .carousel-item .btn:hover, .carousel .carousel-item .btn:focus {
-	color: #fff;
-	background: #000;
-	border-color: #000;
-	box-shadow: none;
-}
-.carousel .carousel-item .btn i {
-	font-size: 14px;
-	font-weight: bold;
-	margin-left: 5px;
-}
-.carousel .thumb-wrapper {
-	text-align: center;
-}
-.carousel .thumb-content {
-	padding: 15px;
-}
-.carousel-control-prev, .carousel-control-next {
-	height: 100px;
-	width: 40px;
-	background: none;
-	margin: auto 0;
-	background: rgba(0, 0, 0, 0.2);
-}
-.carousel-control-prev i, .carousel-control-next i {
-	font-size: 30px;
-	position: absolute;
-	top: 50%;
-	display: inline-block;
-	margin: -16px 0 0 0;
-	z-index: 5;
-	left: 0;
-	right: 0;
-	color: rgba(0, 0, 0, 0.8);
-	text-shadow: none;
-	font-weight: bold;
-}
-.carousel-control-prev i {
-	margin-left: -3px;
-}
-.carousel-control-next i {
-	margin-right: -3px;
-}
-.carousel .item-price {
-	font-size: 13px;
-	padding: 2px 0;
-}
-.carousel .item-price strike {
-	color: #999;
-	margin-right: 5px;
-}
-.carousel .item-price span {
-	color: #86bd57;
-	font-size: 110%;
-}	
-.carousel .carousel-indicators {
-	bottom: -50px;
-}
-.carousel-indicators li, .carousel-indicators li.active {
-	width: 10px;
-	height: 10px;
-	margin: 4px;
-	border-radius: 50%;
-	border-color: transparent;
-	border: none;
-}
-.carousel-indicators li {	
-	background: rgba(0, 0, 0, 0.2);
-}
-.carousel-indicators li.active {	
-	background: rgba(0, 0, 0, 0.6);
-}
-.star-rating li {
-	padding: 0;
-}
-.star-rating i {
-	font-size: 14px;
-	color: #ffc000;
-}
-</style>
-</head>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+
+  
+  </head>
+
+
 <body>
   <div class="container">
     <div class="row">
       <div class="col-md-12">
-        <h2>Trend <b>Kitaplar</b></h2>
+        <h2>Trend <b> Kitaplar</b></h2>
         <div id="myCarousel" class="carousel slide" data-ride="carousel" data-interval="0">
         <!-- Carousel indicators -->
-        <ol class="carousel-indicators">
-          <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
-          <li data-target="#myCarousel" data-slide-to="1"></li>
-          <li data-target="#myCarousel" data-slide-to="2"></li>
-        </ol>   
+     
         <!-- Wrapper for carousel items -->
-        <div class="carousel-inner" >
-          <div class="carousel-item active" >
+        <div class="carousel-inner " >
+          <div class="carousel-item active " >
             <div class="row" >
-              <div class="col-sm-3"  *ngFor="let authorm of authorPageable">
+              <div class="col-lg-3" *ngFor="let trendBook of top10Book"  >
+                <a routerLink="" (click)="categoryOneBookDetails(trendBook.id)">
+
                 <div class="thumb-wrapper" >
-                  <div class="img-box" >
-                    <img src="data:image/jpeg;base64,{{authorm?.picByte}}" form width="250px" height="200px">
+                  <div class="img-box " >
+                    <img src="data:image/jpeg;base64,{{trendBook?.picByte}}" form width="100%" height="100%">
                   </div>
                   <div class="thumb-content">
-                    <h4>Apple iPad</h4>
-                    <p class="item-price"> <span>$369.00</span></p>
+                    <h4>{{trendBook.bookName}}</h4>
+                    <p class="item-price"> <span>{{trendBook.author.authorName}}</span></p>
                     <div class="star-rating">
                       <ul class="list-inline">
-                        <li class="list-inline-item"><i class="fa fa-star"></i></li>
-                        <li class="list-inline-item"><i class="fa fa-star"></i></li>
-                        <li class="list-inline-item"><i class="fa fa-star"></i></li>
-                        <li class="list-inline-item"><i class="fa fa-star"></i></li>
-                        <li class="list-inline-item"><i class="fa fa-star-o"></i></li>
+                     
+                        <li class="list-inline-item" ><i class="fa fa-star"></i></li>
+                        <li class="list-inline-item" ><i class="fa fa-star"></i></li>
+                        <li class="list-inline-item" ><i class="fa fa-star"></i></li>
+                        <li class="list-inline-item"  ><i class="fa fa-star"></i></li>
+                        <li class="list-inline-item" ><i class="fa fa-star-o"></i></li>
+                        <p>Puan: {{trendBook.rating}}</p>
+
                       </ul>
                     </div>
-                    <a href="#" class="btn btn-primary">Add to Cart</a>
+                    <a routerLink="" class="btn btn-primary" (click)="categoryOneBookDetails(trendBook.id)">Detay</a>
                   </div>						
                 </div>
+              </a>
               </div>
               
             </div>
@@ -400,12 +213,8 @@ h2::after {
        
         </div>
         <!-- Carousel controls -->
-        <a class="carousel-control-prev" href="#myCarousel" data-slide="prev">
-          <i class="fa fa-angle-left"></i>
-        </a>
-        <a class="carousel-control-next" href="#myCarousel" data-slide="next">
-          <i class="fa fa-angle-right"></i>
-        </a>
+      
+    
       </div>
       </div>
     </div>
@@ -413,31 +222,69 @@ h2::after {
     <div class="row">
       <div class="col-sm-8"><h4>Son Eklenen Kitaplar</h4>
 
+         <!-- Topic Cards -->
+     <div id="cards_landscape_wrap-2">
+      <div class="container">
+          <div class="row">
+              <div class="col-xs-12 col-sm-6 col-md-3 col-lg-3" *ngFor="let book of lastAddedEightBook">
+                 
+                      <div class="card-flyer">
+                          <div class="text-box">
+                            <a routerLink="" (click)="categoryOneBookDetails(book.id)">
+                              <div class="image-box">
+                                <img src="data:image/jpeg;base64,{{book?.picByte}}" width="170px" height="200px">
+                              </div>
+                              <div class="text-container">
+                                  <h6>{{book.bookName}}</h6>
+                                  <p></p>
+
+                                </div>
+                              </a>
+                          </div>
+                      </div>
+                
+              </div>
+            
+          </div>
+      </div>
+  </div>
+
+
+
         
-         <div class="row">
-          <div class="card" style="width: 11rem;" *ngFor="let book of books">
-            <a routerLink=""  (click)="categoryOneBookDetails(book.id)">
-              
-              <img src="data:image/jpeg;base64,{{book?.picByte}}" width="170px" height="200px">
-            </a>
-                <div class="card-body">
-                <h5 class="card-title"> {{book.bookName}}</h5>
+        
 
-                </div>
+
+
+      </div>
+      <div class="col-sm-4" style="overflow: auto; height:650px"><h4>Çok Satan Kitaplar</h4>
+     
+        <div class="card mb-3" *ngFor="let book of atLeastFiveBook" style="max-width: 540px;" >
+          <div class="row no-gutters" (click)="categoryOneBookDetails(book.id)" >
+           
+
+            <div class="col-md-4">
+              <img src="data:image/jpeg;base64,{{book?.picByte}}" height="90%" width="50%" class="card-img rounded" alt="...">
               
+            </div>
+            <div class="col-md-8">
+              
+              <div class="card-body"  >
+                <h5 class="card-title">{{book.bookName}}</h5>
+                <p class="card-text"> {{book.author.authorName}}</p>
+              </div>
+            </div>
+            
+          </div>
+      
         </div>
-      </div>
 
+ 
 
-
-
-
-      </div>
-      <div class="col-sm-4"><h4>Çok Satan Kitaplar</h4>
-
-
-
-      </div>
     </div>
    
 </div>
+
+
+
+

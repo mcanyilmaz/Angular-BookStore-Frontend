@@ -45,6 +45,8 @@ export class BuyProductComponent implements OnInit {
 
   user:any;
 
+
+  clearToBasket:Boolean=false;
   
 
 
@@ -83,6 +85,11 @@ export class BuyProductComponent implements OnInit {
   
   }
   
+
+  clearBasket(){
+    this.clearToBasket=true;
+
+  }
 
  
 
@@ -189,8 +196,16 @@ export class BuyProductComponent implements OnInit {
         this.quantity = this.i;
         
         this.sumProductPrice = bookPrice * this.quantity;
-        this.totalPrice = this.shippingPrice + this.sumProductPrice;
-        console.log(this.sumProductPrice);
+
+        if(this.sumProductPrice>=100){
+          console.log("sipariş 100 tl den fazla kargo ücretsiz");
+          this.totalPrice = this.sumProductPrice;
+        }else{
+
+          this.totalPrice = this.shippingPrice + this.sumProductPrice;
+          console.log(this.sumProductPrice);
+        }
+
        
       
     }
@@ -215,9 +230,15 @@ export class BuyProductComponent implements OnInit {
     if(this.i !=1){
       this.i--;
       this.quantity=this.i;
-
       this.sumProductPrice = this.sumProductPrice-bookPrice;
-      this.totalPrice = this.shippingPrice + this.sumProductPrice;
+
+      if(this.sumProductPrice<100){
+        this.totalPrice = this.shippingPrice + this.sumProductPrice;
+
+      }else{
+        this.totalPrice =  this.sumProductPrice;
+
+      }
 
       
       console.log(this.sumProductPrice);
@@ -278,6 +299,7 @@ export class BuyProductComponent implements OnInit {
     this.bookService.getBookById(id).subscribe(
       data =>{
       
+        console.log(data);
        this.book = data;
 
        this.sumProductPrice = data.bookPrice;

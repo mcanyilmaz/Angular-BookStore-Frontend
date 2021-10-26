@@ -1,0 +1,60 @@
+<ng-container *ngIf="books.length !=0">
+    <div class="container">
+        <div class="card-table">
+            <div class="cart-product">
+                <table class="table table-responsive">
+                    <thead>
+                        <tr>
+                            <th>No</th>
+                            <th>Kitap Resmi</th>
+                            <th>Kitap Adı</th>
+                            <th>Description</th>
+                            <th>Fiyat</th>
+                           
+                            <th>Toplam</th>
+                            <th>İşlem</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let selectedBook of books; let i = index">
+                            <td>{{i+1}}</td>
+                            <td><img src="data:image/jpeg;base64,{{selectedBook?.picByte}}" width="100px" height="100px">
+                            </td>
+                            <td>{{selectedBook.bookName}}</td>
+                           
+                            <td style="width: 25%;">{{selectedBook.bookName}}</td>
+                            <th style="width: 12%;">{{selectedBook.bookPrice}}</th>
+                     
+                            <td style="width: 12%;">{{selectedBook.total}}</td>
+                            <td>
+                                <button (click)="removeItem(selectedBook)" class="btn btn-danger"><i class="fas fa-trash-alt"></i></button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="4"></td>
+                            <td><button (click)="emptycart()" class="btn btn-danger">Sepeti Boşalt</button></td>
+                            <td><button routerLink="/category" class="btn btn-primary">Alışverişe Devam</button></td>
+                            <td><button class="btn btn-success" (click)="postTheBookItemsOrder()">Ödeme</button></td>
+                            <td><strong>Toplam Fiyat : {{grandTotal}} TL</strong></td>
+                        </tr>   
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</ng-container>
+
+
+<ng-container *ngIf="books.length ==0">
+    <div class="container">
+        <div class="card">
+            <h5 class="card-title">Sepetim</h5>
+        </div>
+        <div class="center">
+            <img src="assets/img/basketempty.png" width="200px" height="200px">
+            <h4>Sepetiniz Boş</h4>
+            <h6>Hemen Şimdi Ürün Ekle</h6>
+            <button routerLink="/category" class="btn btn-primary">Alışverişe Başla</button>
+        </div>
+    </div>
+</ng-container>

@@ -28,6 +28,7 @@ export class IndexComponent implements OnInit {
 
   pages:Array<number> | undefined;
 
+  totalPageNumber:any | undefined;
   //@ts-ignore
   sliderGetDataLenght:number;
 
@@ -73,6 +74,18 @@ export class IndexComponent implements OnInit {
 
     user:User | undefined;
 
+    //@ts-ignore
+    atLeastFiveBook:Book[];
+
+    //@ts-ignore
+    lastAddedEightBook:Book[];
+
+    //@ts-ignore
+    top10Book:Book[];
+
+    //@ts-ignore
+    pagePlusAndMinus:number = 0;
+
   constructor(private categoryService:CategoryService,
     private bookService:BookService,
     private authorService:AuthorService,
@@ -96,14 +109,74 @@ export class IndexComponent implements OnInit {
     this.getImageOrj();
 
 
-    this.pageableAuthor(4,1);
+    this.pageableAuthor(4,0);
 
     this.getImageler();
 
- 
+    this.findTop5ByOrderByBookStock();
+
+    this.findTop8ByOrderByBookNameDesc();
+
+    this.findTop10ByOrderByRatingDesc();
+
+
   }
 
 
+  plusPage(i:number,event:any){
+   
+    event.preventDefault();
+   
+    if(this.pagePlusAndMinus!=2){
+      this.pagePlusAndMinus++;
+      this.page=i;
+      this.pageableAuthor(4,this.page);
+
+    }
+   
+    this.pageableAuthor(4,this.page);
+
+    console.log(this.pagePlusAndMinus);
+    console.log(this.page);
+  }
+ 
+  minusPage(i:number,event:any){
+    event.preventDefault();
+   
+    if(this.pagePlusAndMinus!=0){
+      this.pagePlusAndMinus--;
+      this.page=i;
+      this.pageableAuthor(4,this.page);
+    }else{
+      this.pagePlusAndMinus = 0;
+    }
+    this.page=i;
+    this.pageableAuthor(4,this.page);
+  }
+
+  findTop8ByOrderByBookNameDesc(){
+    this.bookService.findTop8ByOrderByBookNameDesc().subscribe((data => {
+      console.log(data);
+      this.lastAddedEightBook = data;
+    }))
+  }
+  
+  findTop5ByOrderByBookStock(){
+    this.bookService.findTop5ByOrderByBookStock().subscribe((data => {
+      this.atLeastFiveBook = data;
+      console.log(data);
+
+    }))
+  }
+
+  findTop10ByOrderByRatingDesc(){
+    this.bookService.findTop10ByOrderByRatingDesc().subscribe((data => {
+      this.top10Book = data;
+    
+
+      console.log(data);
+    }))
+  }
   
 
   getImageler() {
@@ -126,9 +199,12 @@ export class IndexComponent implements OnInit {
    
        //@ts-ignore
        this.authorPageable= data['content'];
+       console.log("yazarlar")
        console.log(data);
        //@ts-ignore
       this.pages = new Array(data['totalPages']);
+
+
 
       
       });

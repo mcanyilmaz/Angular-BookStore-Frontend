@@ -13,12 +13,12 @@
       <div class="col-sm-12 col-md-10 col-md-offset-1">
 
    
-          <table class="table table-hover">
+          <table class="table table-hover" *ngIf="!clearToBasket">
               <thead>
                   <tr>
                       <th>Ürün</th>
                       <th>Adet</th>
-             
+
                       <th class="text-center">Ürün Fiyatı</th>
                       <th class="text-center">Ara Toplam</th>
 
@@ -30,16 +30,29 @@
                       <td class="col-sm-8 col-md-6">
                       <div class="media">
                           <a class="thumbnail pull-left" href="#">  
-                              <div *ngIf=retrievedImage>
-                                  <img [src]="retrievedImage" height="150px" width="150px">
-                              </div>
+
                           </a>
                           <div class="media-body">
                             
-                              <h4 class="media-heading"><a href="#"> {{book.bookName}}</a></h4>
-                              <h5 class="media-heading"> Yazar :  <a href="#">{{book.author.authorName}}</a></h5>
+                            <div class="row">
+                                <div class="col">
+
+                                    <img src="data:image/jpeg;base64,{{book?.picByte}}" height="150px" width="100px" class="card-img rounded" alt="...">
+
+
+
+                                </div>
+                           
+                                <div class="col">
+
+                              <h4 class="media-heading"> {{book.bookName}}</h4>
+                              <h6 class="media-heading">{{book.author.authorName}}</h6>
                               <span>Stok Durumu: </span><span class="text-success"><strong>Stokta {{book.bookStock}} Adet</strong></span>
-                          </div>
+                            </div>
+                            </div>
+
+
+                            </div>
                       </div></td>
                      
                       <div class="center">
@@ -51,7 +64,7 @@
                       <td class="col-sm-1 col-md-1 text-center"><strong>{{book.bookPrice}} ₺</strong></td>
                       <td class="col-sm-1 col-md-1 text-center"><strong>{{sumProductPrice}}₺</strong></td>
                       <td class="col-sm-1 col-md-1">
-                      <button type="button" class="btn btn-danger">
+                      <button type="button" class="btn btn-danger" (click)="clearBasket()">
                           <span class="glyphicon glyphicon-remove"></span> Sepetten Çıkar
                       </button></td>
                   </tr>
@@ -70,7 +83,14 @@
                       <td>   </td>
                       <td>   </td>
                       <td><h5>Kargo Bedeli</h5></td>
-                      <td class="text-right"><h5><strong>{{shippingPrice}}₺</strong></h5></td>
+                      <td class="text-right" *ngIf="totalPrice<100"><h5><strong>{{shippingPrice}}₺</strong></h5></td>
+                      <td class="text-right" *ngIf="totalPrice>=100">
+                          <h6>
+                            <div class="alert alert-success" role="alert">
+                              <strong>0 ₺ - 100 ₺ Üzeri Kargo Ücretsiz</strong>
+                              </div>   
+                        </h6>
+                    </td>
                   </tr>
                   <tr>
                     
@@ -104,6 +124,12 @@
                   </tr>
               </tbody>
           </table>
+      </div>
+
+      <div class="basketIsClear" *ngIf="clearToBasket">
+          <h4>Sepetiniz Boş</h4>
+          <img src="assets/img/basketempty.png" width="200px" height="200px"><br>
+          <button class="btn btn-success" routerLink="/category">Alışverişe Başla</button>
       </div>
   </div>
 </div>

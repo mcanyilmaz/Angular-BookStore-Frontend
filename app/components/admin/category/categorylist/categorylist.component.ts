@@ -31,6 +31,7 @@ export class CategorylistComponent implements OnInit {
   myForm:FormGroup | undefined;
 
   form:FormGroup | undefined;
+
   
   selectedCategory:Category |undefined;
 
@@ -44,9 +45,38 @@ export class CategorylistComponent implements OnInit {
 
   ngOnInit(): void {
     this.getCategory();
+    this.createCategorySearchAreaModalData();
   }
 
   
+  createCategorySearchAreaModalData(){
+    this.form = this.formBuilder.group({
+    categoryName:[''],  
+  })
+}
+
+getCategorySearchAreaData(){
+  if(this.form?.valid){
+    let payload = {    
+      categoryName:this.form?.controls['categoryName'].value
+    }
+    this.categoryService.findByCategoryNameContaining(payload.categoryName).subscribe((data => {
+      this.category = data;
+      if(data.length==0){
+        Swal.fire(
+          'Hiçbir Sonuç Bulunamadı!',
+          '',
+          'warning'
+        )
+      }
+     
+      console.log(data);
+    }))
+
+
+  }
+}
+
   
   createCategory2(){
     if(this.myForm?.valid){

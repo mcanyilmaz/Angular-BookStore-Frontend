@@ -16,7 +16,8 @@
       </thead>
       <tbody>
         <tr *ngFor="let myOrder of orders" >
-          <a routerLink="" (click)="goToOrderBookDetail(myOrder.id)"><td>{{myOrder.bookName}}</td></a>
+         
+          <a routerLink="" (click)="goToOrderBookDetail(myOrder.id)"><td>{{myOrder.bookName}} {{myOrder.bookList}}</td></a>
           <td>{{myOrder.createTime}}</td>
           <td>{{myOrder.orderNumber}}</td>
           <td>
@@ -27,8 +28,8 @@
       
       </tbody>
     </table>
-    
    
+  
   
   
   
@@ -54,7 +55,7 @@
                           </div>
                       </div>
                       <div class="pricing">
-                          <div class="row">
+                          <div class="row" >
                               <div class="col-9"> <span id="name">Ürün Adı : {{selectedOrder.bookName}}</span> </div>
                               <div class="col-3"> <span id="price">Fiyat : {{selectedOrder.bookPrice}} TL</span> </div>
                               <div class="col-9"> <span id="name">Ürün Adet : </span> </div>
@@ -63,7 +64,7 @@
                           </div>
                           <div class="row">
                               <div class="col-9"> <span id="name">Kargo Bedeli</span> </div>
-                              <div class="col-3"> <span id="price">5 TL</span> </div>
+                              <div class="col-3"> <span id="price"></span> </div>
                           </div>
                       </div>
                       <div class="total">
@@ -73,20 +74,19 @@
                           </div>
                       </div>
                       <div class="tracking">
-                          <div class="title">Sipariş Durumu</div>
+                          <div class="title">Sipariş Durumu: {{selectedOrder.state}}</div>
                       </div>
                       <div class="progress-track">
                           <ul id="progressbar">
-                              <li class="step0 active " id="step1">Sipariş Verildi</li>
-                              <li class="step0 active text-center" id="step2">Hazırlanıyor</li>
-                              <li class="step0 active text-right" id="step3">Yolda</li>
-                              <li class="step0 text-right" id="step4">Teslim Edildi</li>
+                              <li class="step1 active" id="step1">Sipariş Verildi</li>
+                              <li class="step2 active text-center" *ngIf="orderPreparePostState"  id="step2">Hazırlanıyor</li>
+                              <li class="step3 active text-right" *ngIf="orderCargoPostState" id="step3">Yolda</li>
+                              <li class="step4 active text-right" *ngIf="orderDeliveryPostState" id="step4">Teslim Edildi</li>
                           </ul>
                       </div>
                       <div class="footer">
                           <div class="row">
                               <div class="col-2"><img class="img-fluid" src="assets/img/resim1.jpg"></div>
-                              <div class="col-10">Want any help? Please &nbsp;<a> contact us</a></div>
                           </div>
                       </div>
                   </div>
@@ -102,3 +102,29 @@
 
 
 
+
+
+
+  <h3> TESTTT</h3>
+  <table class="table">
+    <thead class="thead-dark">
+      <tr>
+      
+        <th scope="col">Sipariş Adı</th>
+        <th scope="col">Sipariş Tarihi</th>
+        <th scope="col">Takip No</th>
+
+        <th scope="col">İşlem</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let myOrder of orders" >
+       
+       <td>{{myOrder.bookName}} {{myOrder.bookList}}</td>
+        <td>{{myOrder.createTime}}</td>
+        <td>{{myOrder.orderNumber}}</td>
+   
+      </tr>
+    
+    </tbody>
+  </table>

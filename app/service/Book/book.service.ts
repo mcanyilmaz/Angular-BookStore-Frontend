@@ -15,6 +15,26 @@ export class BookService {
   constructor(private http:HttpClient) {
   }
 
+  // kitap stok durumuna göre 5 adet kitap çektim.
+
+  public findTop5ByOrderByBookStock():Observable<Book[]>{
+   return this.http.get<Book[]>(this.apiServerUrl+'findTop5ByOrderByBookStock');
+  }
+
+  // son eklenen 8 kitabı çektim
+
+  public findTop8ByOrderByBookNameDesc():Observable<Book[]>{
+    return this.http.get<Book[]>(this.apiServerUrl+'findTop8ByOrderByBookNameDesc');
+  }
+
+
+  //  TOP 10 KİTAPBI ÇEKTİM
+
+  public findTop10ByOrderByRatingDesc():Observable<Book[]>{
+    return this.http.get<Book[]>(this.apiServerUrl+'findTop10ByOrderByRating/');
+  }
+
+
   public getBooks(): Observable<Book[]>{
     return this.http.get<Book[]>(this.apiServerUrl+'getAllBook');
 
@@ -24,6 +44,11 @@ export class BookService {
   public getBookSort(): Observable<Book[]>{
     return this.http.get<Book[]>(this.apiServerUrl+'getByBookCreateDate');
 
+  }
+
+  public setBookRatingValue(body:any):Observable<Object>{
+
+    return this.http.post(this.apiServerUrl+'updateBookRating/',body);
   }
 
 
@@ -76,8 +101,8 @@ export class BookService {
 
   }
 
-  public updateBook2(id:number, body:any):Observable<Object>{
-    return this.http.put(this.apiServerUrl+'updateBook/',+id,body);
+  public updateBook2(body:any):Observable<Object>{
+    return this.http.put<Object>(this.apiServerUrl+'updateBook/',body);
   }
 
   

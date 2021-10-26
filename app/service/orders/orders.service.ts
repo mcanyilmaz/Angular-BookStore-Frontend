@@ -13,6 +13,14 @@ export class OrdersService {
   private apiServerUrl='http://localhost:8080/v1/';
 
 
+  public newAddOrder(body:any):Observable<Object>{
+    return this.http.post<Object>(this.apiServerUrl+'newAddOrder/',body);
+  }
+
+  public updateOrderState(id:number,body:any):Observable<Object>{
+    return this.http.put(this.apiServerUrl+'updateOrderState/'+id+'?state=',body);
+  }
+
   public findAllOrderByUsername(userName:string):Observable<Orders[]>{
     return this.http.get<Orders[]>(this.apiServerUrl+'findAllOrderByUsername/?userName='+userName);
   }

@@ -10,6 +10,7 @@ import * as bcrypt from 'bcryptjs';
 import { AuthService } from 'src/app/service/auth/auth.service';
 import { TokenStorageService } from 'src/app/service/token/token-storage.service';
 import Swal from 'sweetalert2';
+import { CartService } from 'src/app/service/cart/cart.service';
 
 @Component({
   selector: 'app-header',
@@ -18,7 +19,10 @@ import Swal from 'sweetalert2';
 })
 export class HeaderComponent implements OnInit {
 
+  public totalItem : number = 0;
   
+
+
   showAdminBoard = false;
   showModeratorBoard = false;
   //@ts-ignore
@@ -80,7 +84,8 @@ export class HeaderComponent implements OnInit {
     private userService:UserService,
     private bookService:BookService,
     private authService: AuthService,
-    private tokenStorage: TokenStorageService) { }
+    private tokenStorage: TokenStorageService,
+    private cartService:CartService) { }
 
   ngOnInit(): void {
 
@@ -106,7 +111,20 @@ export class HeaderComponent implements OnInit {
  
       
       this.user2 = user;
+
+
+
+
+
     }
+
+    
+    this.cartService.getBooks()
+    .subscribe(res=>{
+      this.totalItem = res.length;
+    
+    })
+
 
 
   }
@@ -219,8 +237,16 @@ export class HeaderComponent implements OnInit {
           this.reloadPage();
 
         });
+       
  
-}
+    } else{
+      Swal.fire(
+        'İlgili Alanları Doldurunuz',
+        '',
+        'warning'
+      )
+  
+      }
   }
 
 

@@ -30,6 +30,11 @@ export class AuthorService {
     return this.http.put(this.apiServerUrl+'updateAuthor/'+id,body);
   }
 
+  public updateAuthor2(body:any):Observable<Object>{
+    return this.http.put(this.apiServerUrl+'updateAuthor/',body);
+  }
+
+
   public addAuthor(author:Author):Observable<Author>{
     return this.http.post<Author>(this.apiServerUrl+'addAuthor/',author);
   }
@@ -42,6 +47,15 @@ export class AuthorService {
     return this.http.get<Author[]>(this.apiServerUrl+'pageableAuthor/?id='+id+'&pageSize='+pageSize);
 
   }
+
+  public findByAuthorNameContaining(authorName:string):Observable<Author[]>{
+    return this.http.get<Author[]>(this.apiServerUrl+'findByAuthorNameContaining/?authorName='+authorName);
+  }
+
+  
+  
+  
+
 
  
  

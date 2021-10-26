@@ -11,6 +11,7 @@
               
                   <th scope="col">Sipariş id</th>
                   <th scope="col">Sipariş Adı</th>
+                  <th scope="col">Sipariş Durum</th>
                   <th scope="col">İşlemler</th>
             
                 
@@ -21,10 +22,25 @@
                     <tr *ngFor="let order of orders">
                         <td>{{order.id}}</td>
                         <td>{{order.bookName}}</td>
-             
+                        <td> 
+                          <div class="modal-body" *ngIf="myForm">
+                            <form [formGroup]="myForm">
+
+                          <select  class="form-select" (change)="onChange($event,order.id)" formControlName="state"   required>
+                            <option selected>Durum: {{order.state}} </option>
+                            <option id="state" class="form-control" value="Hazırlanıyor"  >Hazırlanıyor</option>
+                            <option id="state"  class="form-control" value="Kargoda"   >Kargoya Verildi</option>
+                            <option id="state"  class="form-control" value="Teslim Edildi"   >Teslim Edildi</option>
+                    
+                          </select>
+                          </form>
+                          </div>
+
+
+                      </td>
                         <td>
-                            <button   (click)="orderDetails(order)"  data-bs-toggle="modal" data-bs-target="#orderDetails" type="button" class="btn btn-primary">Details</button>
-                            <button (click)="deleteOrderGetById(order.id)" data-bs-toggle="modal" data-bs-target="#deleteOrder"  type="button"  class="btn btn-danger">Delete</button>
+                            <button   (click)="orderDetails(order)"  data-bs-toggle="modal" data-bs-target="#orderDetails" type="button" class="btn btn-primary">Detay</button>
+                            <button (click)="deleteOrderGetById(order.id)" data-bs-toggle="modal" data-bs-target="#deleteOrder"  type="button"  class="btn btn-danger">Sil</button>
                           </td>
                   
                 </tr>

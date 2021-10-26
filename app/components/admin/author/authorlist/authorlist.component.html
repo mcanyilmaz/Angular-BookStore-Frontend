@@ -1,26 +1,54 @@
 <div class="container">
   <div class="row">
       <div class="col-sm-2"> <app-adminindex></app-adminindex></div>
-      <div class="col-sm-8"> 
+      <div class="col-sm-10"> 
     
+        <div class="row">
+          <form [formGroup]="form2" *ngIf="form2" >
+            <div class="row justify-content-md-center">
+    
+              <div class="col-sm-6 center">
+    
+                
+                <div class="input-group" >
+                  <div class="form-outline" style="width:400px; margin-top:10px;">
+                    <input type="text" name="authorName"  formControlName="authorName" placeholder="Aramak İstediğiniz Yazarı Giriniz" id="form1" class="form-control" />
+                  
+                  </div>
+                  <button type="button"  class="btn btn-primary">
+                    <i class="fa fa-search"></i>
+                  </button>
+                </div>
+    
+              </div>
+            </div>
+    
+    
+    
+      
+        </form>
+      </div>
+
 
 <table class="table">
     <thead>
     <tr>
   
-      <th scope="col">Yazar id</th>
-      <th scope="col">Yazar Name</th>
+      <th scope="col">Yazar Resim</th>
+      <th scope="col">Yazar Adı</th>
       <th scope="col">İşlemler</th>
 
       <th>
-        <button (click)="createAuthor()"  data-bs-toggle="modal" data-bs-target="#createAuthor"   type="button"  class="btn btn-danger">Yazar Ekle</button>
+        <button (click)="createAuthorModalData()"  data-bs-toggle="modal" data-bs-target="#createAuthor"   type="button"  class="btn btn-danger">Yazar Ekle</button>
       </th>
     </tr>
     </thead>
     <tbody>
         <tr *ngFor=" let authors of author">
     
-            <td>{{authors.id}}</td>
+          <td><img src="data:image/jpeg;base64,{{authors?.picByte}}" form width="100px" height="100px">
+          </td>
+        
           <td>{{authors.authorName}}</td>
          
         <td>
@@ -51,34 +79,28 @@
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="staticBackdropLabel">Create Author</h5>
+        <h5 class="modal-title" id="staticBackdropLabel">Yazar Ekle</h5>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body" *ngIf="myForm">
         <form [formGroup]="myForm">
           <div class="form-group">
             <label for="authorName">Yazar Adı</label>
-            <input type="email" id="authorName"  aria-describedby="authorName" placeholder="Enter authorName"
+            <input type="email" id="authorName"  aria-describedby="authorName" placeholder="Yazar Adı Giriniz"
                    formControlName="authorName">
           
           </div>
-          <div class="form-group">
-            <label for="authorAbout">Yazar Hakkında</label>
-            <input type="email" id="authorAbout"  aria-describedby="authorAbout" placeholder="Enter authorAbout"
-                   formControlName="authorAbout">
           
-          </div>
      
-
           <div class="form-group">
-            <label for="imageName">Yazar Resim Adı</label>
-            <input type="email" id="imageName" readonly class="form-control"  aria-describedby="imageName" placeholder="Enter imageName"
-                   formControlName="imageName" >
-          
+            <label for="exampleFormControlTextarea1">Yazar Hakkında</label>
+            <textarea class="form-control" formControlName="authorAbout"  placeholder="Yazar Hakkında Bilgi Giriniz" id="exampleFormControlTextarea1" rows="3"></textarea>
           </div>
+
+
+        
 
           <input type="file" (change)="onFileChanged($event)">
-          <input type="button" (click)="onUpload()" value="upload">    
             <div *ngIf=message>{{message}}</div>
            
       </form>
@@ -86,7 +108,7 @@
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Kapat</button>
-        <button type="button" class="btn btn-primary" data-bs-dismiss="modal" (click)="createAuthor2()">Yazar Ekle</button>
+        <button type="button" class="btn btn-primary" data-bs-dismiss="modal" (click)="createAuthor()">Yazar Ekle</button>
       </div>
     </div>
   </div>
@@ -115,24 +137,28 @@
         <form [formGroup]="form">
 
           <div class="d-flex justify-content-center">
-           
+            
+            <img src="data:image/jpeg;base64,{{selectedAuthor?.picByte}}"   form width="300px" height="200px">
+
 
 
         </div>
   
           <div class="form-group">
             <label for="authorName">Yazar Adı </label>
-            <input type="email" readonly class="form-control" id="authorName" aria-describedby="authorName" placeholder="Enter authorName"
+            <input type="email" readonly class="form-control" id="authorName" aria-describedby="authorName" placeholder="Yazar Adı Giriniz"
                    formControlName="authorName">
            
           </div>
 
-          <div class="form-group">
-            <label for="authorAbout">Yazar Hakkında </label>
-            <input type="email" readonly class="form-control" id="authorAbout" aria-describedby="authorAbout" placeholder="Enter authorAbout"
-                   formControlName="authorAbout">  
+       
           
+          <div class="form-group">
+            <label for="exampleFormControlTextarea1">Yazar Hakkında</label>
+            <textarea class="form-control" formControlName="authorAbout" readonly  placeholder="Yazar Hakkında Bilgi Giriniz" id="exampleFormControlTextarea1" rows="3"></textarea>
           </div>
+
+
 
     
 
@@ -158,13 +184,13 @@
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
 
-  
-     
-      <div *ngIf=retrievedImage>
-        <img [src]="retrievedImage"  height="100px" width="100px">
+      <div class="d-flex justify-content-center">
+            
+        <img src="data:image/jpeg;base64,{{selectedAuthor?.picByte}}"   form width="300px" height="200px">
+
+
+
     </div>
-
-
       <div class="modal-body" *ngIf="form">
         <form [formGroup]="form">
          
@@ -178,15 +204,20 @@
           </div>
 
 
-          
           <div class="form-group">
-            <label for="authorAbout">Yazar Hakkında</label>
-            <input type="email" class="form-control {{form.controls.authorAbout.touched && form.controls.authorAbout.errors ? 'is-invalid':'' }}" id="authorAbout" aria-describedby="authorAbout" placeholder="Enter authorAbout"
-                   formControlName="authorAbout">  
+            <label for="exampleFormControlTextarea1">Yazar Hakkında</label>
+            <textarea class="form-control {{form.controls.authorAbout.touched && form.controls.authorAbout.errors ? 'is-invalid':'' }}" formControlName="authorAbout"  placeholder="Yazar Hakkında Bilgi Giriniz" id="exampleFormControlTextarea1" rows="3"></textarea>
+         
             <small id="titleRequired" class="text-danger" *ngIf="form.controls.authorAbout.touched && form.controls.authorAbout.errors && form.controls.authorAbout.errors.required" >
               Bu alan boş bırakılamaz
             </small>
+
           </div>
+
+          <div class="form-group">
+          <input type="file" (change)="onFileChanged($event)">
+          </div>
+         
 
       
         </form>

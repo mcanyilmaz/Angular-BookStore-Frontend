@@ -19,16 +19,18 @@
   <!--- Navbar --->
 	<nav class="navbar navbar-expand-lg">
 		<div class="container">
-			<a class="navbar-brand text-white" href="#"><i class="fa fa-graduation-cap fa-lg mr-2"></i>Kitap Mağazanız</a>
-			<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#nvbCollapse" aria-controls="nvbCollapse">
+         
+            <a class="navbar-brand  text-white" href="#"><i class="fa fa-graduation-cap fa-lg mr-2"></i>Kitap Mağazanız</a>
+        
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#nvbCollapse" aria-controls="nvbCollapse">
 				<span class="navbar-toggler-icon"></span>
 			</button>
 			<div class="collapse navbar-collapse" id="nvbCollapse">
 				<ul class="navbar-nav ml-auto">
-					<li class="nav-item pl-1">
+					<li class="nav-item active pl-1">
 						<a class="nav-link" href="#"><i class="fa fa-home fa-fw mr-1"></i>Anasayfa</a>
 					</li>
-					<li class="nav-item active pl-1">
+					<li class="nav-item  pl-1">
 						<a class="nav-link" routerLink="/category"><i class="fa fa-th-list fa-fw mr-1"></i>Kategoriler</a>
 				
           </li>
@@ -77,9 +79,25 @@
                 </li>
               </ul>
 
+              <!--
+                SET DATA ADD TO BASKET
+              -->
+
+              <button routerLink="/baskete" class="btn btn-outline-primary">
+                <i style="font-size: 30px;" class="fas fa-cart-plus"></i>
+                <div style="font-size: 10px;" class="badge bg-danger">{{totalItem}}</div>
+            </button>
+
+              <!--
+                SET DATA ADD TO BASKET
+              -->
+
+
 
 
 				</ul>
+
+    
 			</div>
 		</div>
 	</nav>
@@ -110,7 +128,7 @@
 
           <div class="form-group">
             <label for="email">Adınız</label>
-            <input type="email" class="form-control" id="name" aria-describedby="name" placeholder="Enter name"
+            <input type="email" class="form-control" id="name" aria-describedby="name" placeholder="Adınızı Giriniz"
                    formControlName="name">  
         
                    <small id="nameRequired" class="text-danger" *ngIf="form3.controls.name.touched && form3.controls.name.errors && form3.controls.name.errors.required" >
@@ -124,7 +142,7 @@
 
           <div class="form-group">
             <label for="email">Soyadınız</label>
-            <input type="email" class="form-control" id="surname" aria-describedby="surname" placeholder="Enter surname"
+            <input type="email" class="form-control" id="surname" aria-describedby="surname" placeholder="Soyadınızı Giriniz"
                    formControlName="surname">  
                    <small id="nameRequired" class="text-danger" *ngIf="form3.controls.surname.touched && form3.controls.surname.errors && form3.controls.surname.errors.required" >
                     Bu Alan Boş Bırakılamaz
@@ -145,7 +163,7 @@
             <div class="input-group-prepend">
               <div class="input-group-text">@
             </div>
-            <input type="email" id="username" class="form-control" aria-describedby="username" placeholder="Enter username"
+            <input type="email" id="username" class="form-control" aria-describedby="username" placeholder="Kullanıcı Adı Giriniz"
                    formControlName="username">
                 
 
@@ -162,7 +180,7 @@
 
           <div class="form-group">
             <label for="password">Şifre</label>
-            <input type="password" id="password" class="form-control" aria-describedby="password" placeholder="Enter password"
+            <input type="password" id="password" class="form-control" aria-describedby="password" placeholder="Şifre Giriniz"
                    formControlName="password">
                    <small id="nameRequired" class="text-danger" *ngIf="form3.controls.password.touched && form3.controls.password.errors && form3.controls.password.errors.required" >
                     Bu Alan Boş Bırakılamaz
@@ -175,7 +193,7 @@
           </div>
           <div class="form-group">
             <label for="email">E-Mail</label>
-            <input type="email" class="form-control" id="email" aria-describedby="email" placeholder="Enter email"
+            <input type="email" class="form-control" id="email" aria-describedby="email" placeholder="Email Giriniz"
                    formControlName="email">  
                    <small id="nameRequired" class="text-danger" *ngIf="form3.controls.email.touched && form3.controls.email.errors && form3.controls.email.errors.required" >
                     Bu Alan Boş Bırakılamaz
@@ -213,6 +231,7 @@
       <div class="modal-body" *ngIf="form2">
         <form [formGroup]="form2">
         <div class="form-group">
+          
           <label for="username">Kullanıcı Adı</label>
           <input type="email" id="username" aria-describedby="username" placeholder="Kullanıcı Adı Giriniz"
                  formControlName="username">
@@ -221,7 +240,7 @@
 
         <div class="form-group">
           <label for="password">Şifre</label>
-          <input type="password" id="password" aria-describedby="password" placeholder="Şifrenizi Giriniz"
+          <input type="password" id="password" (keydown.enter)="userLoginControl()" aria-describedby="password" placeholder="Şifrenizi Giriniz"
                  formControlName="password">
      
         </div>
@@ -272,6 +291,7 @@
 
 
 </html>
+
 
 
 

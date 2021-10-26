@@ -1,3 +1,6 @@
+import { Author } from "../AuthorService/author";
+import { Book } from "../Book/book";
+
 export interface Orders {
 
 
@@ -10,4 +13,12 @@ export interface Orders {
     username:string;
     address:string;
     createTime:Date;
+    state:string;
+
+
+    bookList:Book[];
+
+
+
+
 }

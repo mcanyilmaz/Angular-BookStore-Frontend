@@ -19,6 +19,7 @@ export interface Book {
         author:Author;
         category:Category;
 
+        rating:number;
         imageModel:Image;
 
         
@@ -27,6 +28,7 @@ export interface Book {
         type:string;
   
 
+        bookList:Book[];
 
 
 }

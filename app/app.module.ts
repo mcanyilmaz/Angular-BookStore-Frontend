@@ -17,8 +17,6 @@ import { CategorylistComponent } from './components/admin/category/categorylist/
 
 import { AuthorlistComponent } from './components/admin/author/authorlist/authorlist.component';
 
-import { CategorybooklistComponent } from './components/categorybooklist/categorybooklist.component';
-import { CategorybooklistdetailsComponent } from './components/categorybooklistdetails/categorybooklistdetails.component';
 import { AuthorDetailsComponent } from './components/pages/author-details/author-details.component';
 import { BuyProductComponent } from './components/pages/buy-product/buy-product.component';
 import { OrdersListComponent } from './components/admin/orders-list/orders-list.component';
@@ -34,6 +32,9 @@ import { SliderComponent } from './components/admin/slider/slider/slider.compone
 import { ContactComponent } from './components/pages/contact/contact.component';
 import { AboutComponent } from './components/pages/about/about.component';
 import { CategoryComponent } from './components/pages/category/category.component';
+import { BasketComponent } from './components/pages/basket/basket/basket.component';
+import { CategorybooklistdetailsComponent } from './components/pages/categorybooklistdetails/categorybooklistdetails.component';
+import { CategorybooklistComponent } from './components/pages/categorybooklist/categorybooklist.component';
 
 
 
@@ -54,6 +55,7 @@ import { CategoryComponent } from './components/pages/category/category.componen
     IndexComponent,
     AdminindexComponent,
     CategorybooklistComponent,
+    
     CategorybooklistdetailsComponent,
     AuthorDetailsComponent,
     BuyProductComponent,
@@ -66,8 +68,9 @@ import { CategoryComponent } from './components/pages/category/category.componen
     SliderComponent,
     ContactComponent,
     AboutComponent,
-    CategoryComponent
-
+    CategoryComponent,
+    BasketComponent
+ 
   ],
   imports: [
     BrowserModule,

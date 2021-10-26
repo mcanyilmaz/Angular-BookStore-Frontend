@@ -17,7 +17,8 @@ export class UserOrdersComponent implements OnInit {
 
   
   orders:Orders[] = [];
-
+ //@ts-ignore
+  order:Orders;
   //@ts-ignore
   selectedOrder : Orders;
 
@@ -27,6 +28,11 @@ export class UserOrdersComponent implements OnInit {
 
   isLoggedIn = false;
   isLoginFailed = false;
+
+
+  orderCargoPostState:Boolean = false;
+  orderDeliveryPostState:Boolean =false;
+  orderPreparePostState:Boolean =false;
 
   form:FormGroup | undefined;
 
@@ -51,7 +57,7 @@ export class UserOrdersComponent implements OnInit {
       this.username = user.username;
     }
 
-    this.getAllOrders(this.username);
+    console.log(this.getAllOrders(this.username));
 
 
   
@@ -62,8 +68,27 @@ export class UserOrdersComponent implements OnInit {
   }
 
   public viewOrderDetail(order:Orders){
+    this.orderCargoPostState=false;
+    this.orderDeliveryPostState=false;
+    this.orderPreparePostState=false;
 
     this.selectedOrder = order;
+    if(this.selectedOrder.state=="Hazırlanıyor"){
+      this.orderPreparePostState=true;
+  
+
+    }
+
+    else if(this.selectedOrder.state=="Kargoda"){
+      this.orderPreparePostState=true;
+      this.orderCargoPostState=true;
+  
+
+    }else if(this.selectedOrder.state=="Teslim Edildi"){
+      this.orderPreparePostState=true;
+      this.orderCargoPostState=true;
+      this.orderDeliveryPostState = true;
+    }
     console.log(this.selectedOrder);
 
    /* this.form = this.formBuilder.group({
@@ -85,6 +110,7 @@ export class UserOrdersComponent implements OnInit {
 
 
         this.orders = data;
+
 
         console.log("gelen data");
         console.log(this.orders);

@@ -1,0 +1,285 @@
+<html>
+
+<head>
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
+
+</head>
+
+<body>
+
+   
+
+
+    
+    
+
+
+<div class="d-flex justify-content-center container mt-2" >
+        <div class="card about-product text-center"  style="width: 55rem;">
+
+
+                <div class="card-body">
+                    <img src="data:image/jpeg;base64,{{book?.picByte}}" width="450px" height="250px">
+
+
+                <h5 class="card-title">{{book.bookName}}</h5>
+                <p class="card-text">Kitap Detayı: {{book.bookDetails}}</p>
+             
+                <h6 class="card-title">Yazar : {{book.author.authorName}}</h6>
+                    <div class="text-center">
+                        <a routerLink=""  *ngIf="isBookStockIn" (click)="addToBasketAndPay(book.id)" class="btn btn-outline-primary">{{book.bookPrice}}₺ Satın Al </a>&nbsp;
+                        <button *ngIf="isBookStockIn"  class="btn btn-outline-success" (click)=addtocart(book)>Sepete Ekle</button>
+                        <br>Değerlendirme Puanı : {{book.rating}}
+
+                        
+
+                        
+
+
+<div class="container d-flex justify-content-center mt-200" *ngIf="isLoggedIn">
+   
+    <div class="row">
+        <div class="col-md-12">
+           
+            <div class="stars">
+                <form [formGroup]="myForm2" *ngIf="ratingBarVisible"  (change)="onChange($event)"  >
+                  
+                   
+              
+                              
+                    <input  type="radio"  formControlName="star" class="star star-5" id="star-5"  value="5" name="star"  />
+                    <label class="star star-5" for="star-5"></label>
+                    <input  type="radio" formControlName="star"  class="star star-4" id="star-4"  value="4" name="star" />
+                    <label class="star star-4" for="star-4"></label>
+                    <input  type="radio" formControlName="star"  class="star star-3" id="star-3"  value="3" name="star" />
+                    <label class="star star-3" for="star-3"></label>
+                    <input  type="radio" formControlName="star"  class="star star-2" id="star-2"   value="2" name="star" />
+                    <label class="star star-2" for="star-2"></label> 
+                    <input  type="radio"  formControlName="star" class="star star-1" id="star-1"   value="1" name="star" /> 
+                    <label class="star star-1" for="star-1">  
+                    </label> 
+                 
+                    </form>
+                   
+
+            </div>
+            
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+                        <div class="alert alert-secondary" *ngIf="!isBookStockIn" role="alert">
+                            Ürün Tükendi
+                          </div>
+                          
+
+                    </div>
+                </div>
+        </div>
+
+
+        
+
+    </div>
+    
+
+
+
+
+    
+
+
+    
+
+     <!--
+
+  (ngSubmit)="onAddBook(addForm)"
+     --> 
+ <!--
+    <form #addForm="ngForm" >
+  
+  
+        <div class="col-9">
+         <label>Comment</label>
+         <input type="text" ngModel name="comment" class="form-control" id="comment">
+        </div>
+   
+   
+     
+   
+       <button [disabled]="addForm.invalid"  id="butonid" type="submit" class="btn btn-primary">Add Comment</button>
+     
+    
+    </form>
+-->
+
+
+
+   
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <section class="content-item"  id="comments">
+        <div class="container">   
+
+            <div class="alert alert-light" *ngIf="!isLoggedIn" role="alert">
+                Yorum Yapabilmek İçin Giriş Yapmanız Gerekmektedir.
+                 </div>
+                
+        <div class="row">
+            <div *ngIf="isLoggedIn">
+                <ng-container *ngIf="form">
+              
+                <form [formGroup]="form" >
+                <div class="col-sm-8">
+                    <div class="form-group" *ngIf="isLoggedIn" >
+                            <label for="comment">Yorumunuz </label>
+                            <textarea class="form-control form-control-lg" rows=3 formControlName="comment" id="comment" aria-describedby="comment" placeholder="Kitap Hakkında Düşüncelerinizi Giriniz" >
+                            </textarea>
+                            
+                     </div>
+                  </div>
+            
+                        <div class="col-sm-4">
+                            <button type="submit" class="btn btn-primary" (click)="kaydet()">Yorum Yap
+
+                            </button>
+                        </div>
+                
+                </form>
+                </ng-container>
+            
+            
+            </div>
+        
+        </div>
+
+        
+            <div class="row">
+                <div class="col-sm-8">   
+                 
+                  
+                  <h3>Ürün Hakkında Yorumlar</h3>
+
+                  <div *ngIf="pageableComment.length==0">Henüz yorum yapılmadı, İlk yorum yapan siz olun !</div>
+                  <!-- COMMENT 1 - START -->
+                  <div class="media" *ngFor="let yorum of pageableComment">
+
+                
+                      <a class="pull-left" href="#"><img src="data:image/jpeg;base64,{{yorum?.user?.picByte}}" form width="150px" height="150px">
+                      </a>
+                      <div class="media-body"  >
+                          <h6 class="media-heading">{{yorum.user.username}}</h6>
+                          <p>{{yorum.comment}}</p>
+                          <ul class="list-unstyled list-inline media-detail pull-left">
+                              <li><i class="fa fa-calendar"></i>{{yorum.createTime}}</li>
+                              <li><i class="fa fa-thumbs-up"></i>13</li>
+                          </ul>
+                          <ul class="list-unstyled list-inline media-detail pull-right">
+                            <li class=""><a href="">Yorumu Beğen</a></li>
+
+                          </ul>
+                      </div>
+                  </div>
+                  <!-- COMMENT 1 - END -->
+                  
+                
+              
+              </div>
+              <div class="col-sm-4">
+                <div class="dropdown">
+      
+                   <button class="dropbtn">Sıralama Seçiniz</button>
+                        <div class="dropdown-content">
+                            <a href="" routerLink="categoryBookListDetails/bookid" (click)="choose(5)">5</a>
+                            <a href="" routerLink="categoryBookListDetails/bookid" (click)="choose(10)">10</a>
+                            <a href="" routerLink="categoryBookListDetails/bookid" (click)="choose(15)">15</a>
+                        </div>
+                  </div>
+            </div>
+          </div>
+          
+            
+        </div>
+    </section>
+
+                
+
+    <!--
+
+             
+    <div class="d-flex justify-content-center container mt-5">
+        <div class="card p-3 bg-white"><i class="fa fa-apple"></i>
+            <div class="about-product text-center mt-2">
+                <div *ngIf=retrievedImage>
+                    <img [src]="retrievedImage" height="300px" width="300px">
+                </div>
+                <div>
+                    <h4>{{book.bookName}}</h4>
+                    <h5 class="mt-0 text-black-50"><b>Yazar</b>:{{book.author.authorName}}</h5>
+                    <h6 class="mt-0 text-black-50">{{book.bookDetails}}</h6>
+
+                </div>
+            </div>
+            <div class="stats mt-2">
+                <div class="d-flex justify-content-between p-price"><span>Kitap Stok</span><span>{{book.bookStock}}</span></div>
+                <div class="d-flex justify-content-between p-price"><span>Kitap Fiyatı</span><span>{{book.bookPrice}}</span></div>
+            </div>
+        </div>
+    </div>
+
+
+    -->
+
+    
+<nav aria-label="Page navigation example">
+    <ul class="pagination justify-content-center">
+      <li class="page-item disabled">
+        <a class="page-link" href="#" tabindex="-1">Önceki</a>
+      </li>
+      <li class="page-item" *ngFor="let p of pages; let i=index"><a class="page-link"  (click)="setPage(i,$event)">{{i+1}}</a></li>
+    
+      <li class="page-item">
+        <a class="page-link" href="#">Sonraki</a>
+      </li>
+    </ul>
+  </nav>
+
+
+   
+
+
+  
+</body>
+
+</html>
+
+
+
+
+
+
+
+
+
+
+
